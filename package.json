@@ -1,4 +1,18 @@
 {
+  "version": "0.1.1",
+    "description": "Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.",
+    "author": {
+    "name": "Alexander Batista",
+    "email": "“spidergt1@aol.com”"
+  },
+  "bugs": {
+    "url": "https://github.com/Tailor/Master/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tailor/Master.git"
+  },
+    "license": "Apache-2.0",
   "dependencies": {
     "busboy": "^0.2.14",
     "cookie": "^0.3.1",
