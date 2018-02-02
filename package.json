@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "busboy": "^0.2.14",
+    "cookie": "^0.3.1",
+    "ejs": "^2.5.7",
+    "masterapi": "^1.0.11",
+    "mastercontroller": "^1.0.11",
+    "masterrouter": "^1.0.11",
+    "masterview": "^1.0.12",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.10.8"
+  }
+}
