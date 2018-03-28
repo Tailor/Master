@@ -1,19 +1,20 @@
-var appRouter = require('masterrouter');
+var app = require('mastercontroller');
+var router = app.router;
 
 // Add mime types to router
-appRouter.addMimeType({'.ico': 'image/x-icon'});
-appRouter.addMimeType({'.html': 'text/html'});
-appRouter.addMimeType({'.js': 'text/javascript'});
-appRouter.addMimeType({'.json': 'application/json'});
-appRouter.addMimeType({'.css': 'text/css'});
-appRouter.addMimeType({'.png': 'image/png'});
-appRouter.addMimeType({'.jpg': 'image/jpeg'});
-appRouter.addMimeType({'.wav': 'audio/wav'});
-appRouter.addMimeType({'.mp3': 'audio/mpeg'});
-appRouter.addMimeType({'.svg': 'image/svg+xml'});
-appRouter.addMimeType({'.pdf': 'application/pdf'});
-appRouter.addMimeType({'.doc': 'application/msword'});
-appRouter.addMimeType({'.eot': 'appliaction/vnd.ms-fontobject'});
-appRouter.addMimeType({'.ttf': 'application/octet-stream'});
-appRouter.addMimeType({'.woff': 'application/font-woff'});
-appRouter.addMimeType({'.woff2': 'application/font-woff2'});
+router.addMimeType({'.ico': 'image/x-icon'});
+router.addMimeType({'.html': 'text/html'});
+router.addMimeType({'.js': 'text/javascript'});
+router.addMimeType({'.json': 'application/json'});
+router.addMimeType({'.css': 'text/css'});
+router.addMimeType({'.png': 'image/png'});
+router.addMimeType({'.jpg': 'image/jpeg'});
+router.addMimeType({'.wav': 'audio/wav'});
+router.addMimeType({'.mp3': 'audio/mpeg'});
+router.addMimeType({'.svg': 'image/svg+xml'});
+router.addMimeType({'.pdf': 'application/pdf'});
+router.addMimeType({'.doc': 'application/msword'});
+router.addMimeType({'.eot': 'appliaction/vnd.ms-fontobject'});
+router.addMimeType({'.ttf': 'application/octet-stream'});
+router.addMimeType({'.woff': 'application/font-woff'});
+router.addMimeType({'.woff2': 'application/font-woff2'});

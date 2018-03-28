@@ -3,12 +3,11 @@ var fs = require('fs');
 var url = require('url');
 var http = require('http');
 var path = require('path');
-var appRouter = require('masterrouter');
+var app = require('mastercontroller')(["MasterRouter", "MasterView", "MasterAPI", "MasterError", "MasterSocket", "MasterJWT", "MasterSession"]);
+
 require('./routes');
 require('./mime');
-
-var http_IP = '127.0.0.1';
-var http_port = 8080;
+require("./config");
 
 
 var server = http.createServer(function(req, res) {
@@ -24,7 +23,7 @@ var server = http.createServer(function(req, res) {
 
   // if extention exist then its a file.
   if(ext === ""){
-      require("./config")(req, res);
+      require("./load")(req, res);
   }
   else{
 
@@ -47,7 +46,7 @@ var server = http.createServer(function(req, res) {
               res.end(`Error getting the file: ${err}.`);
             } else {
               
-              const mimeType = appRouter.findMimeType(ext);
+              const mimeType = app.router.findMimeType(ext);
 
               // if the file is found, set Content-type and send data
               res.setHeader('Content-type', mimeType || 'text/plain' );
@@ -59,5 +58,17 @@ var server = http.createServer(function(req, res) {
   }
 }); // end server()
 
-server.listen(http_port, http_IP);
+var io = require('socket.io')(server);
+
+io.on('connection', function(client) {  
+  console.log('Socket Client connected...', client);
+  app.socket.load(client, io);
+  // client.on('join', function(data) {
+  //     console.log(data);
+  //     client.emit('messages', 'Hello from server');
+  // });
+
+});
+server.timeout = 200000;
+server.listen(app.http_port, app.http_IP);
 
