@@ -9,7 +9,7 @@ module.exports = {
   | The session secret is used to create session tokens. Please do not share this code.
   |
   */
-  secret: createNewJWTSecret,
+  secret: AddSecretHere,
   
 
   /*
