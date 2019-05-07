@@ -4,8 +4,8 @@
 const program = require('commander');
 var fs = require('fs-extra');
 var crypto = require('crypto');
-var Git = require("nodegit");
-var nrc = require('node-run-cmd');
+//var Git = require("nodegit");
+//var nrc = require('node-run-cmd');
 
 let capitalizeFirstLetter = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
@@ -18,13 +18,13 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('0.0.2')
-  .description('A framework to build applications in node');
+  .version('0.0.2', '-v, -version')
+  .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
   .command('server')
   .alias('s')
-  .description('Start node server')
+  .description('Start Master Node server')
   .action(function(cmd){
       var dir = process.cwd();
       console.log("starting server");
