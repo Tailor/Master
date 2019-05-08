@@ -18,7 +18,7 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('0.0.2', '-v, -version')
+  .version('0.0.2', '-v', '-version')
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
@@ -263,18 +263,18 @@ program
                       var JWThash = crypto.randomBytes(20).toString('hex');
                       var sessionhash = crypto.randomBytes(20).toString('hex');
 
-                      fs.readFile(pathName + "master/config/initializers/jwt.js", 'utf8', function (err,data) {
+                      fs.readFile(pathName + "/config/initializers/jwt.js", 'utf8', function (err,data) {
                           if (err) return console.log(err);
                           var result = data.replace(/AddSecretHere/g, JWThash);
 
-                          fs.writeFile(pathName + "master/config/initializers/jwt.js", result, 'utf8', function (err) {
+                          fs.writeFile(pathName + "/config/initializers/jwt.js", result, 'utf8', function (err) {
                              if (err) return console.log(err)
                               else{
-                                fs.readFile(pathName + "master/config/initializers/sessions.js", 'utf8', function (err,data) {
+                                fs.readFile(pathName + "/config/initializers/sessions.js", 'utf8', function (err,data) {
                                     if (err) return console.log(err);
                                     var result = data.replace(/AddSecretHere/g, sessionhash);
           
-                                    fs.writeFile(pathName + "master/config/initializers/sessions.js", result, 'utf8', function (err) {
+                                    fs.writeFile(pathName + "/config/initializers/sessions.js", result, 'utf8', function (err) {
                                       if (err) return console.log(err)
                                         else{
                                             console.log("Created new Master application named " + name);
