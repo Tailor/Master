@@ -1,11 +1,10 @@
 {
   "dependencies": {
-    "@slack/client": "^4.8.0",
     "bcrypt-nodejs": "^0.0.3",
-    "better-sqlite3": "^5.2.1",
-    "mastercontroller": "^1.0.25",
-    "masterrecord": "0.0.5",
-    "socket.io": "^2.1.1"
+    "better-sqlite3": "^5.4.0",
+    "mastercontroller": "^1.0.26",
+    "masterrecord": "^0.0.6",
+    "socket.io": "^2.2.0"
   },
   "version": "1.0.25"
 }
