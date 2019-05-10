@@ -3,7 +3,7 @@ var master = require('mastercontroller');
 class homeController{
 
 	constructor() {
-		// can have multibale beforeaction
+		// can have multiple beforeAction calls
 		// this.beforeAction(["create","index" ,"show", "edit", "new"], function(){ });
     }
 
