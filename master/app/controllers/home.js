@@ -4,7 +4,7 @@ class homeController{
 
 	constructor() {
 		// can have multibale beforeaction
-		//this.beforeAction(["create","index" ,"show", "addVote", "getUserById"], this.auth);
+		// this.beforeAction(["create","index" ,"show", "edit", "new"], function(){ });
     }
 
     index(){
