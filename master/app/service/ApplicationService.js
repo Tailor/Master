@@ -1,8 +1,8 @@
 var master = require('mastercontroller');
 
-class ApplicationService {
+class applicationService {
     constructor(){}
 }
 
 
-master.extendController(ApplicationService);
+master.extendController(applicationService);

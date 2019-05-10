@@ -6,7 +6,7 @@ var sessions = require('./sessions');
 
 /* Load dependency named ApplicationService to our application controller class.
  so that you can have access to it inside my controllers */
-require(master.root + '/app/service/ApplicationService');
+require(master.root + '/app/service/applicationService');
 
 master.init(process.env.master);
 master.router.mimes(mime);
