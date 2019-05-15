@@ -1,6 +1,6 @@
 /*
 ** Add on browser js file **
-  var homeScoket = io.connect('http://127.0.0.1:8080', {query : "socket=home"});
+  var homeSocket = io.connect('http://127.0.0.1:8080', {query : "socket=home"});
   homeSocket.on('index', function(obj){});
   homedSocket.emit('index', *SEND OBJECT*);
 */
