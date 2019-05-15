@@ -14,4 +14,4 @@ master.socket.init();
 master.sessions.init(sessions);
 master.jwt.init(jwt);
 master.error.init(master.env);
-masterrecord.init(master.env.database);
+masterrecord.init(master.env);
