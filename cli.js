@@ -313,6 +313,12 @@ to read about a specific subcommand or concept.`;
     if(name !== null){
       var dir = process.cwd();
       var pathName = dir + "/" + name;
+      fs.mkdir(pathName + "/db");
+      fs.mkdir(pathName + "/app/assets");
+      fs.mkdir(pathName + "/app/assets/fonts");
+      fs.mkdir(pathName + "/app/assets/images");
+      fs.mkdir(pathName + "/app/assets/javascripts");
+      fs.mkdir(pathName + "/app/assets/stylesheets");
       fs.ensureDir(pathName, function(err){
              if (err) return console.log('An error occured while creating folder.');
              else{
