@@ -12,8 +12,7 @@ module.exports = {
     publicfolder : "public",
     database : {
         type: "better-sqlite3",
-        fileMustExist : true,
-        connection : master.root + "/db/testing.db",
+        connection : master.root + "/db/",
         password: "",
         username: ""
     }
