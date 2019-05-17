@@ -28,7 +28,7 @@ class AddControllerNameHereController{
 
   // POST /<add_name>
   async create(params){
-    return this.returnView();
+    return this.returnView("views/AddControllerNameHere/index.html");
   }
 
   // PUT /<add_name>/1

@@ -2,7 +2,7 @@
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "better-sqlite3": "^5.4.0",
-    "mastercontroller": "^1.0.30",
+    "mastercontroller": "^1.0.31",
     "masterrecord": "^0.0.7",
     "socket.io": "^2.2.0"
   },
