@@ -1,4 +1,4 @@
-var master = require('mastercontroller');
+const master = require('mastercontroller');
 
 class homeController{
 
