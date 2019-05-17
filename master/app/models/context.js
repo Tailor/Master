@@ -1,7 +1,7 @@
 
 const master = require('masterrecord');
 
-class Context extends master.Context{
+class context extends master.Context{
     constructor() {
         super();
         // this.dbset(YOURMODEL);
@@ -9,4 +9,4 @@ class Context extends master.Context{
 
 }
 
-module.exports = Context
+module.exports = context
