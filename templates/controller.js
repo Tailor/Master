@@ -7,37 +7,37 @@ class AddControllerNameHereController{
 	}
   
    // GET /<add_name>
-	async Index(params){
+	async index(params){
     return this.returnView();
   }
   
   // GET /<add_name>/1
-  async Show(params){
+  async show(params){
     return this.returnView();
   }
 
   // GET /<add_name>/new
-  async New(params){
+  async new(params){
     return this.returnView();
   }
 
   // GET /<add_name>/1/edit
-  async Edit(params){
+  async edit(params){
     return this.returnView();
   }
 
   // POST /<add_name>
-  async Create(params){
+  async create(params){
     return this.returnView();
   }
 
   // PUT /<add_name>/1
-  async Update(params){
+  async update(params){
     return this.returnView();
   }
 
   // DELETE /<add_name>/1
-  async Destroy(params){
+  async destroy(params){
     return this.returnView();
   }
 

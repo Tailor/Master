@@ -115,19 +115,23 @@ to read about a specific subcommand or concept.`;
                             var result = 
                             
                                   `
-                                  let master = require('mastercontroller');
-                                  
-                                  class ${ lowercaseFirstLetter(name) }Controller extends master.ApplicationController{
+let master = require('mastercontroller');
 
-                                    constructor() {
-                                      super();
-                                    }
+class ${ lowercaseFirstLetter(name) }Controller {
 
-                                    async ${ lowercaseFirstLetter(actionName) }(params){
-                                      return this.returnView();
-                                    }
+  constructor() {
 
-                                  }`;
+  }
+
+  async ${ lowercaseFirstLetter(actionName) }(params){
+    return this.returnView();
+  }
+
+}
+
+module.exports =  ${ lowercaseFirstLetter(name) }Controller;
+
+`;
 
                             // add template file to controller folder with name
                             fs.writeFile(file, result, 'utf8', function (err) {
@@ -262,10 +266,10 @@ to read about a specific subcommand or concept.`;
                                                         `;
 
                                                         fs.writeFileSync(viewPath + "/" + "_form.html", formData, 'utf8');
-                                                        fs.writeFileSync(viewPath + "/" + "Index.html", indexData, 'utf8');
-                                                        fs.writeFileSync(viewPath + "/" + "Show.html", showData, 'utf8');
-                                                        fs.writeFileSync(viewPath + "/" + "New.html", newData, 'utf8');
-                                                        fs.writeFileSync(viewPath + "/" + "Edit.html", editData, 'utf8');
+                                                        fs.writeFileSync(viewPath + "/" + "index.html", indexData, 'utf8');
+                                                        fs.writeFileSync(viewPath + "/" + "show.html", showData, 'utf8');
+                                                        fs.writeFileSync(viewPath + "/" + "new.html", newData, 'utf8');
+                                                        fs.writeFileSync(viewPath + "/" + "edit.html", editData, 'utf8');
 
                                                                                  // find controller using name
                                                         var socketTempFile = dir + '/app/sockets/' + lowercaseFirstLetter(name) + "Socket.js";
