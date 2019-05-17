@@ -225,7 +225,7 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
                                     var routesPath = dir + '/config/routes.js';
                                     fs.readFile(routesPath, 'utf8', function (err,data) {
                                           if (err) return console.log("An error occured while creating controller routes");
-                                          var resource = "master.router.resources('" + name + "');"
+                                          var resource = "router.resources('" + name + "');"
                                           var result = data + resource;
 
                                           // write route resource to routes.js
