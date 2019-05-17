@@ -11,6 +11,10 @@ let capitalizeFirstLetter = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
 }
 
+let lowercaseFirstLetter = function(str1){
+  return str1.charAt(0).toLowerCase() + str1.slice(1);
+}
+
 // npm unlink
 // npm link
 const [,, ...args] = process.argv
@@ -101,11 +105,11 @@ to read about a specific subcommand or concept.`;
     if(type !== null){
       if(name !== null){
           var dir = process.cwd();
-          switch(type) {
+          switch(type) { 
               case "controller":
 
                         // find controller using name
-                        var file = dir + '/app/controllers/' + capitalizeFirstLetter(name) + "Controller.js";
+                        var file = dir + '/app/controllers/' + lowercaseFirstLetter(name) + "Controller.js";
                         if(actionName !== undefined){
                         // read controller template file
                             var result = 
@@ -113,13 +117,13 @@ to read about a specific subcommand or concept.`;
                                   `
                                   let master = require('mastercontroller');
                                   
-                                  class ${ capitalizeFirstLetter(name) }Controller extends master.ApplicationController{
+                                  class ${ lowercaseFirstLetter(name) }Controller extends master.ApplicationController{
 
                                     constructor() {
                                       super();
                                     }
 
-                                    async ${ capitalizeFirstLetter(actionName) }(params){
+                                    async ${ lowercaseFirstLetter(actionName) }(params){
                                       return this.returnView();
                                     }
 
@@ -131,14 +135,14 @@ to read about a specific subcommand or concept.`;
                                else{
                                     console.log("generated controller with name " + name);
 
-                                    var viewPath = dir + '/app/views/' + capitalizeFirstLetter(name);
+                                    var viewPath = dir + '/app/views/' + lowercaseFirstLetter(name);
                                       // create view folder if non is created
                                     fs.ensureDir(viewPath, function(err){
                                          if (err) return console.log('An error occured while creating folder.');
                                          else{
                                             console.log("generated view folder with name " + name);
                                             // create the view file
-                                              var file = viewPath + "/" + capitalizeFirstLetter(actionName) + ".html"
+                                              var file = viewPath + "/" + lowercaseFirstLetter(actionName) + ".html"
                                               fs.writeFile(file, "", 'utf8', function (err) {
                                                    if (err) return console.log(err)
                                                    else{
@@ -156,13 +160,13 @@ to read about a specific subcommand or concept.`;
 
                   break;
               case "view":
-                      var pathName = dir + '/app/views/' + capitalizeFirstLetter(name);
+                      var pathName = dir + '/app/views/' + lowercaseFirstLetter(name);
                       fs.ensureDir(pathName, function(err){
                          if (err) return console.log('An error occured while creating View folder ' + name);
                          else{
                             console.log("generated View folder with name " + name);
                             if(actionName !== undefined){
-                                var file = pathName + "/" + capitalizeFirstLetter(actionName) + ".html"
+                                var file = pathName + "/" + lowercaseFirstLetter(actionName) + ".html"
                                 fs.writeFile(file, "", 'utf8', function (err) {
                                      if (err) return console.log(err)
                                      else{
@@ -177,13 +181,13 @@ to read about a specific subcommand or concept.`;
               case "socket":
 
                          // find controller using name
-                        var file = dir + '/app/sockets/' + capitalizeFirstLetter(name) + "Socket.js";
+                        var file = dir + '/app/sockets/' + lowercaseFirstLetter(name) + "Socket.js";
                         var pathName = __dirname + "/templates/socket.js";
 
                         // read socket template file
                         fs.readFile(pathName, 'utf8', function (err,data) {
                             if (err) return console.log("An error occured while creating socket");
-                            var result =  data.replace(/AddControllerNameHere/g, capitalizeFirstLetter(name));
+                            var result =  data.replace(/AddControllerNameHere/g, lowercaseFirstLetter(name));
 
                             // add template file to socket folder with name
                             fs.writeFile(file, result, 'utf8', function (err) {
@@ -199,14 +203,14 @@ to read about a specific subcommand or concept.`;
                       // TODO: consider creating style sheets in scaffolding
 
                        // find controller using name
-                        var file = dir + '/app/controllers/' + capitalizeFirstLetter(name) + "Controller.js";
+                        var file = dir + '/app/controllers/' + lowercaseFirstLetter(name) + "Controller.js";
                         var pathName = __dirname + "/templates/controller.js"
                         
                         // read controller template file
                         fs.readFile(pathName, 'utf8', function (err,data) {
                             if (err) return console.log("An error occured while creating controller");
-                            var updatedResult = data.replace(/<add_name>/g, capitalizeFirstLetter(name));
-                            var result =  updatedResult.replace(/AddControllerNameHere/g, capitalizeFirstLetter(name));
+                            var updatedResult = data.replace(/<add_name>/g, lowercaseFirstLetter(name));
+                            var result =  updatedResult.replace(/AddControllerNameHere/g, lowercaseFirstLetter(name));
 
                             // add template file to controller folder with name
                             fs.writeFile(file, result, 'utf8', function (err) {
@@ -225,7 +229,7 @@ to read about a specific subcommand or concept.`;
                                              if (err) return console.log(err)
                                              else{
                                                   console.log("Added route resource to routes.js");
-                                                  var viewPath = dir + '/app/views/' + capitalizeFirstLetter(name);
+                                                  var viewPath = dir + '/app/views/' + lowercaseFirstLetter(name);
                                                   // create view folder if non is created
                                                   fs.ensureDir(viewPath, function(err){
                                                      if (err) return console.log('An error occured while creating view folder.');
@@ -264,13 +268,13 @@ to read about a specific subcommand or concept.`;
                                                         fs.writeFileSync(viewPath + "/" + "Edit.html", editData, 'utf8');
 
                                                                                  // find controller using name
-                                                        var socketTempFile = dir + '/app/sockets/' + capitalizeFirstLetter(name) + "Socket.js";
+                                                        var socketTempFile = dir + '/app/sockets/' + lowercaseFirstLetter(name) + "Socket.js";
                                                         var socketPathName = __dirname + "/templates/socket.js";
 
                                                         // read socket template file
                                                         fs.readFile(socketPathName, 'utf8', function (err,data) {
                                                             if (err) return console.log("An error occured while creating socket");
-                                                            var result =  data.replace(/AddControllerNameHere/g, capitalizeFirstLetter(name));
+                                                            var result =  data.replace(/AddControllerNameHere/g, lowercaseFirstLetter(name));
                                                             // add template file to socket folder with name
                                                             fs.writeFile(socketTempFile, result, 'utf8', function (err) {
                                                                if (err) return console.log(err)
