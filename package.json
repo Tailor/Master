@@ -11,8 +11,7 @@
   "dependencies": {
     "commander": "^2.19.0",
     "fs-extra": "^7.0.0 ",
-    "node-run-cmd": "^1.0.1",
-    "nodegit": "^0.23.0"
+    "node-run-cmd": "^1.0.1"
   },
   "bin": {
     "master": "./cli.js"
