@@ -202,7 +202,59 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
                             });
                         });
 
-                  break;
+              break;
+              case "component":
+
+                  var dir = process.cwd();
+                  var pathName = dir + "/component/" + name;
+                  fs.mkdir(dir + "/component",{ recursive: true });
+                  fs.mkdir(dir + "/component/" + name,{ recursive: true });
+                  fs.mkdir(pathName + "/db",{ recursive: true });
+                  fs.mkdir(pathName + "/app/assets",{ recursive: true });
+                  fs.mkdir(pathName + "/app/assets/fonts",{ recursive: true });
+                  fs.mkdir(pathName + "/app/assets/images",{ recursive: true });
+                  fs.mkdir(pathName + "/app/assets/javascripts",{ recursive: true });
+                  fs.mkdir(pathName + "/app/assets/stylesheets",{ recursive: true });
+                  fs.ensureDir(pathName, function(err){
+                        if (err) return console.log('An error occured while creating folder.');
+                        else{
+                              // copy source folder to destination
+                              fs.copy(__dirname + "/component", pathName, function (err) {
+                                  if (err) return console.log('An error occured while copying the folder.');
+                                  
+                                  var JWThash = crypto.randomBytes(20).toString('hex');
+                                  var sessionhash = crypto.randomBytes(20).toString('hex');
+            
+                                  fs.readFile(pathName + "/config/initializers/jwt.js", 'utf8', function (err,data) {
+                                      if (err) return console.log(err);
+                                      var result = data.replace(/AddSecretHere/g, JWThash);
+            
+                                      fs.writeFile(pathName + "/config/initializers/jwt.js", result, 'utf8', function (err) {
+                                        if (err) return console.log(err)
+                                          else{
+                                            fs.readFile(pathName + "/config/initializers/sessions.js", 'utf8', function (err,data) {
+                                                if (err) return console.log(err);
+                                                var result = data.replace(/AddSecretHere/g, sessionhash);
+                      
+                                                fs.writeFile(pathName + "/config/initializers/sessions.js", result, 'utf8', function (err) {
+                                                  if (err) return console.log(err)
+                                                    else{
+                                                        console.log("Created new component named " + name);
+                                                    };
+                                                  
+                                                });
+                                            });
+                                              
+                                          };
+                                        
+                                      });
+                                  });
+                                  
+                              });
+                        }
+            
+                    });
+              break
               case "scaffold":
                       // TODO: consider creating style sheets in scaffolding
 

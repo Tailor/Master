@@ -9,8 +9,8 @@
   "author": "Alexander Batista",
   "license": "ISC",
   "dependencies": {
-    "commander": "^2.19.0",
-    "fs-extra": "^7.0.0 ",
+    "commander": "^2.20.0",
+    "fs-extra": "^8.0.1",
     "node-run-cmd": "^1.0.1"
   },
   "bin": {
