@@ -224,30 +224,34 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
                                   
                                   var JWThash = crypto.randomBytes(20).toString('hex');
                                   var sessionhash = crypto.randomBytes(20).toString('hex');
-            
-                                  fs.readFile(pathName + "/config/initializers/jwt.js", 'utf8', function (err,data) {
-                                      if (err) return console.log(err);
-                                      var result = data.replace(/AddSecretHere/g, JWThash);
-            
-                                      fs.writeFile(pathName + "/config/initializers/jwt.js", result, 'utf8', function (err) {
-                                        if (err) return console.log(err)
-                                          else{
-                                            fs.readFile(pathName + "/config/initializers/sessions.js", 'utf8', function (err,data) {
-                                                if (err) return console.log(err);
-                                                var result = data.replace(/AddSecretHere/g, sessionhash);
-                      
-                                                fs.writeFile(pathName + "/config/initializers/sessions.js", result, 'utf8', function (err) {
-                                                  if (err) return console.log(err)
-                                                    else{
-                                                        console.log("Created new component named " + name);
-                                                    };
-                                                  
-                                                });
-                                            });
-                                              
-                                          };
-                                        
-                                      });
+
+                                  fs.readFile(pathName + "/config/routes.js", 'utf8', function (err,data) {
+                                    if (err) return console.log(err);
+                                    data.replace(/REPLACEWITHFOLDERNAME/g,  pathName);
+                                    fs.readFile(pathName + "/config/initializers/jwt.js", 'utf8', function (err,data) {
+                                        if (err) return console.log(err);
+                                        var result = data.replace(/AddSecretHere/g, JWThash);
+              
+                                        fs.writeFile(pathName + "/config/initializers/jwt.js", result, 'utf8', function (err) {
+                                          if (err) return console.log(err)
+                                            else{
+                                              fs.readFile(pathName + "/config/initializers/sessions.js", 'utf8', function (err,data) {
+                                                  if (err) return console.log(err);
+                                                  var result = data.replace(/AddSecretHere/g, sessionhash);
+                        
+                                                  fs.writeFile(pathName + "/config/initializers/sessions.js", result, 'utf8', function (err) {
+                                                    if (err) return console.log(err)
+                                                      else{
+                                                          console.log("Created new component named " + name);
+                                                      };
+                                                    
+                                                  });
+                                              });
+                                                
+                                            };
+                                          
+                                        });
+                                    });
                                   });
                                   
                               });
