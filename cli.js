@@ -219,7 +219,7 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
                         if (err) return console.log('An error occured while creating folder.');
                         else{
                               // copy source folder to destination
-                              fs.copy(__dirname + "/components", pathName, function (err) {
+                              fs.copy(__dirname + "/component", pathName, function (err) {
                                   if (err) return console.log('An error occured while copying the folder.');
                                   
                                   var JWThash = crypto.randomBytes(20).toString('hex');
