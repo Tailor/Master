@@ -22,8 +22,8 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('0.0.2')
-  .option('-v, --version', '0.0.2') 
+  .version('0.0.3')
+  .option('-v, --version', '0.0.3') 
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
@@ -206,9 +206,9 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
               case "component":
 
                   var dir = process.cwd();
-                  var pathName = dir + "/component/" + name;
-                  fs.mkdir(dir + "/component",{ recursive: true });
-                  fs.mkdir(dir + "/component/" + name,{ recursive: true });
+                  var pathName = dir + "/components/" + name;
+                  fs.mkdir(dir + "/components",{ recursive: true });
+                  fs.mkdir(dir + "/components/" + name,{ recursive: true });
                   fs.mkdir(pathName + "/db",{ recursive: true });
                   fs.mkdir(pathName + "/app/assets",{ recursive: true });
                   fs.mkdir(pathName + "/app/assets/fonts",{ recursive: true });
@@ -219,7 +219,7 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
                         if (err) return console.log('An error occured while creating folder.');
                         else{
                               // copy source folder to destination
-                              fs.copy(__dirname + "/component", pathName, function (err) {
+                              fs.copy(__dirname + "/components", pathName, function (err) {
                                   if (err) return console.log('An error occured while copying the folder.');
                                   
                                   var JWThash = crypto.randomBytes(20).toString('hex');
