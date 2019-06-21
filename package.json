@@ -1,6 +1,6 @@
 {
   "name": "master",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A framework to build applications in node",
   "main": "./cli.js",
   "scripts": {
@@ -10,8 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^2.20.0",
-    "fs-extra": "^8.0.1",
-    "node-run-cmd": "^1.0.1"
+    "fs-extra": "^8.0.1"
   },
   "bin": {
     "master": "./cli.js"

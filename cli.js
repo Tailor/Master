@@ -4,8 +4,6 @@
 const program = require('commander');
 var fs = require('fs-extra');
 var crypto = require('crypto');
-//var Git = require("nodegit");
-//var nrc = require('node-run-cmd');
 
 let capitalizeFirstLetter = function(str1){
   return str1.charAt(0).toUpperCase() + str1.slice(1);
@@ -22,8 +20,8 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('0.0.3')
-  .option('-v, --version', '0.0.3') 
+  .version('0.0.6')
+  .option('-v, --version', '0.0.6') 
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
@@ -210,11 +208,6 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
                   fs.mkdir(dir + "/components",{ recursive: true });
                   fs.mkdir(dir + "/components/" + name,{ recursive: true });
                   fs.mkdir(pathName + "/db",{ recursive: true });
-                  fs.mkdir(pathName + "/app/assets",{ recursive: true });
-                  fs.mkdir(pathName + "/app/assets/fonts",{ recursive: true });
-                  fs.mkdir(pathName + "/app/assets/images",{ recursive: true });
-                  fs.mkdir(pathName + "/app/assets/javascripts",{ recursive: true });
-                  fs.mkdir(pathName + "/app/assets/stylesheets",{ recursive: true });
                   fs.ensureDir(pathName, function(err){
                         if (err) return console.log('An error occured while creating folder.');
                         else{
@@ -378,11 +371,6 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
       var dir = process.cwd();
       var pathName = dir + "/" + name;
       fs.mkdir(pathName + "/db",{ recursive: true });
-      fs.mkdir(pathName + "/app/assets",{ recursive: true });
-      fs.mkdir(pathName + "/app/assets/fonts",{ recursive: true });
-      fs.mkdir(pathName + "/app/assets/images",{ recursive: true });
-      fs.mkdir(pathName + "/app/assets/javascripts",{ recursive: true });
-      fs.mkdir(pathName + "/app/assets/stylesheets",{ recursive: true });
       fs.ensureDir(pathName, function(err){
              if (err) return console.log('An error occured while creating folder.');
              else{
@@ -431,9 +419,5 @@ module.exports =  ${ lowercaseFirstLetter(name) }Controller;
   });
 
   program.parse(process.argv);
-
-  var toLower = function(v) {
-    return v.toLowerCase();
-  }
 
 
