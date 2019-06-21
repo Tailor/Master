@@ -1,6 +1,6 @@
 {
   "name": "master",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A framework to build applications in node",
   "main": "./cli.js",
   "scripts": {
