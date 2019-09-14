@@ -1,11 +1,12 @@
-// Master version 0.2 
+// Master version 0.3
 var fs = require('fs');
 var url = require('url');
 var http = require('http');
 var path = require('path');
 var master = require('mastercontroller');
 master.root = __dirname;
-master.require(["MasterError", "MasterRouter", "MasterView", "MasterHtml", "MasterTemp" , "MasterAction", "MasterActionFilters", "MasterSocket", "MasterJWT", "MasterSession"]);
+master.masterRoot = __dirname;
+master.require(["MasterError", "MasterTools", "MasterRouter", "MasterView", "MasterHtml", "MasterTemp" , "MasterAction", "MasterActionFilters", "MasterSocket", "MasterJWT", "MasterSession"]);
 require('./config/routes');
 require("./config/initializers/config");
 
@@ -81,4 +82,3 @@ io.on('connection', function(socket) {
 
 server.timeout = master.env.requestTimeout;
 server.listen(master.env.httpPort, master.env.http);
-

@@ -3,4 +3,4 @@ var router = require('mastercontroller').router;
 //an example of using a slug
 //router.route("/controller/action/:slug", "/controller/action", "get");
 
-router.route("/", "home/index", "get");
+router.route("/", "home#index", "get");
