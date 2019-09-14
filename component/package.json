@@ -1,9 +1,10 @@
 {
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "better-sqlite3": "^5.4.0",
-    "mastercontroller": "^1.0.33",
-    "masterrecord": "^0.0.7",
+    "mastercontroller": "^1.0.36",
+    "masterrecord": "^0.0.10",
     "socket.io": "^2.2.0"
   },
-  "version": "1.0.27"
+  "version": "0.0.1"
 }
