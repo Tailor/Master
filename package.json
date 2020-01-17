@@ -1,6 +1,6 @@
 {
   "name": "master",
-  "version": "0.0.10",
+  "version": "0.0.13",
   "description": "A framework to build applications in node",
   "main": "./cli.js",
   "scripts": {
@@ -9,8 +9,7 @@
   "author": "Alexander Batista",
   "license": "ISC",
   "dependencies": {
-    "commander": "^2.20.0",
-    "fs-extra": "^8.0.1"
+    "commander": "^4.1.0"
   },
   "bin": {
     "master": "./cli.js"

@@ -2,7 +2,7 @@
 
 // https://itnext.io/making-cli-app-with-ease-using-commander-js-and-inquirer-js-f3bbd52977ac
 const program = require('commander');
-var fs = require('fs-extra');
+var fs = require('fs');
 var crypto = require('crypto');
 
 let capitalizeFirstLetter = function(str1){
