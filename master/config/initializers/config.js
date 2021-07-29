@@ -1,17 +1,20 @@
-var master = require('mastercontroller');
-var masterrecord = require('masterrecord');
-var jwt = require('./jwt');
-var mime = require('./mime');
-var sessions = require('./sessions');
 
-/* Load dependency named ApplicationService to our application controller class.
- so that you can have access to it inside my controllers */
-require(master.root + '/app/service/applicationService');
+    var master = require('mastercontroller');
+    var mimes = require('./mime.json');
+    var request = require('./request.json');
 
-master.init(process.env.master);
-master.router.mimes(mime);
-master.socket.init();
-master.sessions.init(sessions);
-master.jwt.init(jwt);
-master.error.init(master.env);
-masterrecord.init(master.env);
+    // initlaizing the tools we need for Master to run properly
+    master.setupServer(master.env.http, master.env.httpPort, master.env.requestTimeout);
+    master.request.init(request);
+    master.error.init(master.env.error);
+    master.router.init(mimes);
+    master.socket.init();
+    master.sessions.init();
+    master.jwt.init().sha256();
+
+    // register these apps to have access to them in the controller.
+      // example: master.register("mainContext", { anyobject : "name"});
+
+    // require as many components you need 
+      // example: require(`${master.root}/components/myComponent/initializers/config`);
+

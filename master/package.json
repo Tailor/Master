@@ -1,9 +1,6 @@
 {
   "dependencies": {
-    "better-sqlite3": "^5.4.3",
-    "mastercontroller": "^1.0.36",
-    "masterrecord": "^0.0.11",
-    "socket.io": "^2.2.0"
+    "mastercontroller": "^1.1.4"
   },
-  "version": "1.0.28"
+  "version": "1.0.29"
 }

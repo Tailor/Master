@@ -1,4 +1,4 @@
-module.exports = {
+{
     /*
     |--------------------------------------------------------------------------
     | Origin
@@ -14,7 +14,7 @@ module.exports = {
     | Function - Receives the current origin and should return one of the above values.
     |
     */
-    origin: false,
+   "origin": false,
   
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ module.exports = {
     | Array - An array of allowed methods
     |
     */
-    methods: ['GET', 'PUT', 'POST'],
+   "methods": ['GET', 'PUT', 'POST'],
   
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ module.exports = {
     | Function - Receives the current header and should return one of the above values.
     |
     */
-    headers: true,
+   "headers": true,
   
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ module.exports = {
     | Array - An array of allowed headers
     |
     */
-    exposeHeaders: false,
+   "exposeHeaders": false,
   
     /*
     |--------------------------------------------------------------------------
@@ -71,7 +71,7 @@ module.exports = {
     | boolean.
     |
     */
-    credentials: false,
+   "credentials": false,
   
     /*
     |--------------------------------------------------------------------------
@@ -81,5 +81,5 @@ module.exports = {
     | Define Access-Control-Allow-Max-Age
     |
     */
-    maxAge: 90
+   "maxAge": 90
   }

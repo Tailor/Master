@@ -1,14 +1,10 @@
-// Master version 0.3
+// UPDATE : must allow you to use https and http to create server
+// Master version 0.3.1
 var fs = require('fs');
 var url = require('url');
 var http = require('http');
 var path = require('path');
 var master = require('mastercontroller');
-master.root = __dirname;
-master.masterRoot = __dirname;
-master.require(["MasterError", "MasterTools", "MasterRouter", "MasterView", "MasterHtml", "MasterTemp" , "MasterAction", "MasterActionFilters", "MasterSocket", "MasterJWT", "MasterSession"]);
-require('./config/routes');
-require("./config/initializers/config");
 
 var server = http.createServer(async function(req, res) {
   console.log("path", `${req.method} ${req.url}`);
@@ -18,10 +14,10 @@ var server = http.createServer(async function(req, res) {
   // extract URL path
   let pathname = `.${parsedUrl.pathname}`;
 
-  // based on the URL path, extract the file extention. e.g. .js, .doc, ...
+  // based on the URL path, extract the file extension. e.g. .js, .doc, ...
   const ext = path.parse(pathname).ext;
 
-  // if extention exist then its a file.
+  // if extension exist then its a file.
   if(ext === ""){
     if(true){ // update in settings
       // ->withHeader('Access-Control-Allow-Origin', '*')
@@ -50,7 +46,7 @@ var server = http.createServer(async function(req, res) {
             return;
           }
 
-          // if is a directory search for index file matching the extention
+          // if is a directory search for index file matching the extension
           if (fs.statSync(pathname).isDirectory()) pathname += '/index' + ext;
 
           // read file from file system
@@ -80,5 +76,8 @@ io.on('connection', function(socket) {
   };
 });
 
-server.timeout = master.env.requestTimeout;
-server.listen(master.env.httpPort, master.env.http);
+master.environmentType = process.env.master;
+master.root = __dirname;
+master.start(server);
+require("./config/initializers/config");
+

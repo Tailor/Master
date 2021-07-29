@@ -1,17 +1,12 @@
+// Dont need to load everything main Config file loaded
 var master = require('mastercontroller');
-var masterrecord = require('masterrecord');
-var jwt = require('./jwt');
-var mime = require('./mime');
-var sessions = require('./sessions');
 
-/* Load dependency named ApplicationService to our application controller class.
- so that you can have access to it inside my controllers */
-require(master.root + '/app/service/applicationService');
+// initlaizing the tools we need for Master to run properly
+master.router.init();
 
-master.init(process.env.master);
-master.router.mimes(mime);
-master.socket.init();
-master.sessions.init(sessions);
-master.jwt.init(jwt);
-master.error.init(master.env);
-masterrecord.init(master.env);
+
+// register these apps to have access to them in the controller.
+  // example: master.register("mainContext", { anyobject : "name"});
+
+// require as many components you need 
+  // example: require(`${master.root}/components/myComponent/initializers/config`);
