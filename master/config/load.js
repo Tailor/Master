@@ -13,5 +13,6 @@ module.exports = function(params) {
   */
  
   master.router.load(params);
+  master.cors.load(params);
 
 }

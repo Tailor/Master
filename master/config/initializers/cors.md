@@ -1,0 +1,63 @@
+
+    |--------------------------------------------------------------------------
+    | Origin
+    |--------------------------------------------------------------------------
+    |
+    | Set a list of origins to be allowed. The value can be one of the following
+    |
+    | Boolean: true - Allow current request origin
+    | Boolean: false - Disallow all
+    | String - single string with one origin
+    | Array - An array of allowed origins
+    
+
+    |--------------------------------------------------------------------------
+    | Methods
+    |--------------------------------------------------------------------------
+    |
+    | HTTP methods to be allowed. The value can be one of the following
+    | Array - An array of allowed methods
+    |
+
+    |--------------------------------------------------------------------------
+    | allowedHeaders
+    |--------------------------------------------------------------------------
+    |
+    | List of headers to be allowed via Access-Control-Request-Headers header.
+    | The value can be on of the following.
+    |
+    | Boolean: true - Allow current request headers
+    | Boolean: false - Disallow all
+    | Array - An array of allowed headers
+    | String - single string with one allowed header
+    | 
+
+
+    |--------------------------------------------------------------------------
+    | Expose Headers
+    |--------------------------------------------------------------------------
+    |
+    | A list of headers to be exposed via `Access-Control-Expose-Headers`
+    | header. The value can be on of the following.
+    |
+    | Boolean: false - Disallow all
+    | String - single string with one allowed header
+    | Array - An array of allowed headers
+    |
+
+    |--------------------------------------------------------------------------
+    | Credentials
+    |--------------------------------------------------------------------------
+    |
+    | Define Access-Control-Allow-Credentials header. It should always be a
+    | boolean.
+    |
+    
+      
+    |--------------------------------------------------------------------------
+    | MaxAge
+    |--------------------------------------------------------------------------
+    |
+    | Define Access-Control-Allow-Max-Age header It should always be a
+    | number.
+    |
