@@ -3,12 +3,14 @@
     var mimes = require('./mime.json');
     var request = require('./request.json');
     var cors = require('./cors.json');
+    var root = __dirname;
 
     // initlaizing the tools we need for Master to run properly
-    master.serverSettings(master.env.http, master.env.httpPort, master.env.requestTimeout);
+    master.serverSettings(master.env.server);
     master.request.init(request);
     master.error.init(master.env.error);
-    master.router.init(mimes);
+    master.router.addMimeList(mimes);
+    master.router.init(root);
     master.socket.init();
     master.sessions.init();
     master.jwt.init().sha256();
