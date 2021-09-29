@@ -37,8 +37,8 @@
     | Expose Headers
     |--------------------------------------------------------------------------
     |
-    | A list of headers to be exposed via `Access-Control-Expose-Headers`
-    | header. The value can be on of the following.
+    | The Access-Control-Expose-Headers response header allows a server to indicate which 
+    | response headers should be made available to scripts running in the browser, in response to a cross-origin request
     |
     | Boolean: false - Disallow all
     | String - single string with one allowed header
@@ -49,8 +49,11 @@
     | Credentials
     |--------------------------------------------------------------------------
     |
-    | Define Access-Control-Allow-Credentials header. It should always be a
-    | boolean.
+    | The Access-Control-Allow-Credentials response header tells browsers whether to expose the response to frontend JavaScript code when the request's credentials mode (Request.credentials) is include.
+    | When a request's credentials mode (Request.credentials) is include, browsers will only expose the response to frontend JavaScript code if the Access-Control-Allow-Credentials value is true
+    |
+    | Boolean: true - Expose frontend JavaScript code
+    | Boolean: false - Conceal frontend JavaScript code
     |
     
       

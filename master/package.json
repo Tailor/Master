@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "content-type": "^1.0.4",
-    "mastercontroller": "^1.1.12",
+    "mastercontroller": "^1.1.13",
     "socket.io": "^4.2.0"
   },
-  "version": "1.0.31"
+  "version": "1.0.32"
 }
