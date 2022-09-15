@@ -243,8 +243,8 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('1.0.3')
-  .option('-v, --version', '1.0.3') 
+  .version('1.0.4')
+  .option('-v, --version', '1.0.4') 
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
