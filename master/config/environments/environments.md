@@ -1,5 +1,5 @@
     "server": {
-        "http" : "localhost", --- setup your sever http you want to use
+        "hostname" : "localhost" or "127.0.0.1", --- setup your servers hostname you want to use 
         "httpPort" : 8080, --- setup your severs http port
         "requestTimeout" : 60000 --- setup server timeout time
     },
