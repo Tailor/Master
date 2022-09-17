@@ -1,9 +1,8 @@
 // Dont need to load everything main Config file loaded
 var master = require('mastercontroller');
-var root = __dirname;
 
 // initlaizing the tools we need for Master to run properly
-master.router.init(root);
+master.router.start();
 
 
 // register these apps to have access to them in the controller.
