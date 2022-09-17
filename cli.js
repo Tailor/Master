@@ -127,7 +127,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
       var pathName = dir + "/components/" + name;
       fs.mkdir(dir + "/components",{ recursive: true });
       fs.mkdir(dir + "/components/" + name,{ recursive: true });
-      fs.mkdir(pathName + "/db",{ recursive: true });
+      fs.mkdir(dir + "/components/" + name + "/db",{ recursive: true });
       fs.ensureDir(pathName, function(err){
             if (err) return console.log("--- Please run command from inside the project folder ---- ", 'An error occured while creating folder.');
             else{
