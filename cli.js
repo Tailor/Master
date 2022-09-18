@@ -3,6 +3,7 @@
 // https://itnext.io/making-cli-app-with-ease-using-commander-js-and-inquirer-js-f3bbd52977ac
 const program = require('commander');
 var fs = require('fs-extra');
+const os = require('os');
 
 // let capitalizeFirstLetter = function(str1){
 //   return str1.charAt(0).toUpperCase() + str1.slice(1);
@@ -104,7 +105,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
     socketManager : function(type, name, actionName){
         var dir = process.cwd();
         // find controller using name
-        var file = dir + '/app/sockets/' + cliManager.lowercaseFirstLetter(name) + "Socket.js";
+        var file = dir + cliManager.lowercaseFirstLetter(name) + "Socket.js";
         var pathName = __dirname + "/templates/socket.js";
 
         // read socket template file
@@ -124,10 +125,10 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
     componentManager : function(type, name, actionName){
 
       var dir = process.cwd();
-      var pathName = dir + "/components/" + name;
-      fs.mkdir(dir + "/components",{ recursive: true });
-      fs.mkdir(dir + "/components/" + name,{ recursive: true });
-      fs.mkdir(dir + "/components/" + name + "/db",{ recursive: true });
+      var pathName = dir + "/" + name;
+     // fs.mkdir(dir + "/components",{ recursive: true });
+      //fs.mkdir(pathName,{ recursive: true });
+      //fs.mkdir(dir + "/components/" + name + "/db",{ recursive: true });
       fs.ensureDir(pathName, function(err){
             if (err) return console.log("--- Please run command from inside the project folder ---- ", 'An error occured while creating folder.');
             else{
@@ -169,7 +170,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
                     fs.readFile(routesPath, 'utf8', function (err,data) {
                           if (err) return console.log("--- Please run command from inside the project folder ---- ", "An error occured while creating controller routes");
                           var resource = "router.resources('" + name + "');"
-                          var result = data + resource;
+                          var result = data + os.EOL + resource;
 
                           // write route resource to routes.js
                           fs.writeFile(routesPath, result, 'utf8', function (err) {
@@ -243,8 +244,8 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('1.0.7')
-  .option('-v, --version', '1.0.7') 
+  .version('1.0.8')
+  .option('-v, --version', '1.0.8') 
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
@@ -277,7 +278,7 @@ program
   program
   .command('generate <type> <name> [actionName...]')
   .alias('g')
-  .description('Generate Controllers, Views, Sockets and Scaffoldings')
+  .description('Generate Controllers, Views, components, Sockets and Scaffoldings')
   .action(function(type, name, actionName){
     if(type !== null){
       if(name !== null){
@@ -322,6 +323,8 @@ program
       var dir = process.cwd();
       var pathName = dir + "/" + name;
       fs.mkdir(pathName + "/db",{ recursive: true });
+      fs.mkdir(pathName + "/components",{ recursive: true });
+      fs.mkdir(pathName + "/sockets",{ recursive: true });
       fs.ensureDir(pathName, function(err){
              if (err) return console.log('An error occured while creating folder.');
              else{
