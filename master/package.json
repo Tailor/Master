@@ -2,6 +2,7 @@
   "dependencies": {
     "content-type": "^1.0.4",
     "mastercontroller": "^1.1.14",
+    "masterrecord": "^0.0.28",
     "socket.io": "^4.5.2"
   },
   "version": "1.0.33"
