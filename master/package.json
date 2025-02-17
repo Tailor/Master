@@ -5,5 +5,5 @@
     "masterrecord": "^0.0.46",
     "socket.io": "^4.8.1"
   },
-  "version": "1.0.33"
+  "version": "1.0.34"
 }
