@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // https://itnext.io/making-cli-app-with-ease-using-commander-js-and-inquirer-js-f3bbd52977ac
-const program = require('commander');
+const {program} = require('commander');
 var fs = require('fs-extra');
 const os = require('os');
 
@@ -244,8 +244,7 @@ const [,, ...args] = process.argv
 //console.log(`hello ${args}`);
 
 program
-  .version('1.0.8')
-  .option('-v, --version', '1.0.8') 
+  .version('1.0.9', '-v, --version', '1.0.9')
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
