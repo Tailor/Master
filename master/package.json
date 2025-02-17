@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "content-type": "^1.0.4",
-    "mastercontroller": "^1.1.14",
-    "masterrecord": "^0.0.28",
-    "socket.io": "^4.5.2"
+    "content-type": "^1.0.5",
+    "mastercontroller": "^1.2.0",
+    "masterrecord": "^0.0.46",
+    "socket.io": "^4.8.1"
   },
   "version": "1.0.33"
 }
