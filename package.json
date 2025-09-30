@@ -4,7 +4,7 @@
     "commander": "^14.0.1",
     "fs-extra": "^11.3.2"
   },
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern",
   "homepage": "https://github.com/Tailor/Master#readme",
   "repository": {
