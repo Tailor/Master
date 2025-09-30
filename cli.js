@@ -4,6 +4,7 @@
 const {program} = require('commander');
 var fs = require('fs-extra');
 const os = require('os');
+const path = require('path');
 
 // let capitalizeFirstLetter = function(str1){
 //   return str1.charAt(0).toUpperCase() + str1.slice(1);
@@ -28,7 +29,7 @@ var cliManager = {
     controllerManager : function(type, name, actionNameList){
         var dir = process.cwd();
         // find controller using name
-        var file = dir + '/app/controllers/' + cliManager.lowercaseFirstLetter(name) + "Controller.js";
+        var file = path.join(dir, 'app', 'controllers', cliManager.lowercaseFirstLetter(name) + 'Controller.js');
         if(actionNameList !== undefined){
         // read controller template file
             var result = 
@@ -53,7 +54,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
               else{
                     console.log("generated controller with name " + name);
 
-                    var viewPath = dir + '/app/views/' + cliManager.lowercaseFirstLetter(name);
+                    var viewPath = path.join(dir, 'app', 'views', cliManager.lowercaseFirstLetter(name));
                       // create view folder if non is created
                     fs.ensureDir(viewPath, function(err){
                         if (err) return console.log('An error occured while creating folder.');
@@ -61,7 +62,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
                             console.log("generated view folder with name " + name);
                             // create the view file
                             for (var i = 0; i < actionNameList.length; i++) {
-                              var file = viewPath + "/" + cliManager.lowercaseFirstLetter(actionNameList[i]) + ".html";
+                              var file = path.join(viewPath, cliManager.lowercaseFirstLetter(actionNameList[i]) + '.html');
                               fs.writeFile(file, "", 'utf8', function (err) {
                                   if (err) return console.log(err)
                                                              
@@ -80,7 +81,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
     },
     viewManager : function(type, name, actionNameList){
       var dir = process.cwd();
-      var pathName = dir + '/app/views/' + cliManager.lowercaseFirstLetter(name);
+      var pathName = path.join(dir, 'app', 'views', cliManager.lowercaseFirstLetter(name));
       fs.ensureDir(pathName, function(err){
         if (err) return console.log("--- Please run command from inside the project folder ---- ", 'An error occured while creating View folder ' + name);
         else{
@@ -88,7 +89,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
             console.log("generated View folder with name " + name);
             if(actionNameList !== undefined){
               for (var i = 0; i < actionNameList.length; i++) {
-                var file = pathName + "/" + cliManager.lowercaseFirstLetter(actionNameList[i]) + ".html";
+                var file = path.join(pathName, cliManager.lowercaseFirstLetter(actionNameList[i]) + '.html');
                 fs.writeFile(file, "", 'utf8', function (err) {
                     if (err) return console.log("--- Please run command from inside the project folder ---- ",err)
                     else{
@@ -104,12 +105,15 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
     },
     socketManager : function(type, name, actionName){
         var dir = process.cwd();
-        // find controller using name
-        var file = dir + cliManager.lowercaseFirstLetter(name) + "Socket.js";
-        var pathName = __dirname + "/templates/socket.js";
+        // write socket into app/sockets
+        var socketsDir = path.join(dir, 'app', 'sockets');
+        var file = path.join(socketsDir, cliManager.lowercaseFirstLetter(name) + 'Socket.js');
+        var pathName = path.join(__dirname, 'templates', 'socket.js');
 
         // read socket template file
-        fs.readFile(pathName, 'utf8', function (err,data) {
+        fs.ensureDir(socketsDir, function(err){
+          if (err) return console.log("--- Please run command from inside the project folder ---- ", 'An error occured while creating sockets folder.');
+          fs.readFile(pathName, 'utf8', function (err,data) {
             if (err) return console.log("--- Please run command from inside the project folder ---- ", "An error occured while creating socket");
             var result =  data.replace(/AddControllerNameHere/g, cliManager.lowercaseFirstLetter(name));
 
@@ -120,23 +124,21 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
                     console.log("generated socket with name " + name);
               }                             
             });
+          });
         });
     },
     componentManager : function(type, name, actionName){
 
       var dir = process.cwd();
-      var pathName = dir + "/" + name;
-     // fs.mkdir(dir + "/components",{ recursive: true });
-      //fs.mkdir(pathName,{ recursive: true });
-      //fs.mkdir(dir + "/components/" + name + "/db",{ recursive: true });
+      var pathName = path.join(dir, name);
       fs.ensureDir(pathName, function(err){
             if (err) return console.log("--- Please run command from inside the project folder ---- ", 'An error occured while creating folder.');
             else{
                   // copy source folder to destination
-                  fs.copy(__dirname + "/component", pathName, function (err) {
+                  fs.copy(path.join(__dirname, 'component'), pathName, function (err) {
                       if (err) return console.log('An error occured while copying the folder.');
                   
-                      fs.readFile(pathName + "/config/routes.js", 'utf8', function (err,data) {
+                      fs.readFile(path.join(pathName, 'config', 'routes.js'), 'utf8', function (err,data) {
                         if (err) return console.log(err);
                         data.replace(/REPLACEWITHFOLDERNAME/g,  pathName);
                       });
@@ -152,8 +154,8 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
       
         var dir = process.cwd();
         // find controller using name
-        var file = dir + '/app/controllers/' + cliManager.lowercaseFirstLetter(name) + "Controller.js";
-        var pathName = __dirname + "/templates/controller.js";    
+        var file = path.join(dir, 'app', 'controllers', cliManager.lowercaseFirstLetter(name) + 'Controller.js');
+        var pathName = path.join(__dirname, 'templates', 'controller.js');    
         // read controller template file
         fs.readFile(pathName, 'utf8', function (err,data) {
             if (err) return console.log("--- Please run command from inside the project folder ---- ", "An error occured while creating controller");
@@ -166,7 +168,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
               else{
                     console.log("generated controller with name " + name);
                     // read routes.js
-                    var routesPath = dir + '/config/routes.js';
+                    var routesPath = path.join(dir, 'config', 'routes.js');
                     fs.readFile(routesPath, 'utf8', function (err,data) {
                           if (err) return console.log("--- Please run command from inside the project folder ---- ", "An error occured while creating controller routes");
                           var resource = "router.resources('" + name + "');"
@@ -177,7 +179,7 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
                             if (err) return console.log("--- Please run command from inside the project folder ---- ", err)
                             else{
                                   console.log("Added route resource to routes.js");
-                                  var viewPath = dir + '/app/views/' + cliManager.lowercaseFirstLetter(name);
+                                  var viewPath = path.join(dir, 'app', 'views', cliManager.lowercaseFirstLetter(name));
                                   // create view folder if non is created
                                   fs.ensureDir(viewPath, function(err){
                                     if (err) return console.log("--- Please run command from inside the project folder ---- ", 'An error occured while creating view folder.');
@@ -202,15 +204,15 @@ module.exports =  ${ cliManager.lowercaseFirstLetter(name) }Controller;
                                             <h1> Edit ${ name } </h1>
                                             \${ html.render('${ name }/_form.html') }`;
 
-                                        fs.writeFileSync(viewPath + "/" + "_form.html", formData, 'utf8');
-                                        fs.writeFileSync(viewPath + "/" + "index.html", indexData, 'utf8');
-                                        fs.writeFileSync(viewPath + "/" + "show.html", showData, 'utf8');
-                                        fs.writeFileSync(viewPath + "/" + "new.html", newData, 'utf8');
-                                        fs.writeFileSync(viewPath + "/" + "edit.html", editData, 'utf8');
+                                        fs.writeFileSync(path.join(viewPath, '_form.html'), formData, 'utf8');
+                                        fs.writeFileSync(path.join(viewPath, 'index.html'), indexData, 'utf8');
+                                        fs.writeFileSync(path.join(viewPath, 'show.html'), showData, 'utf8');
+                                        fs.writeFileSync(path.join(viewPath, 'new.html'), newData, 'utf8');
+                                        fs.writeFileSync(path.join(viewPath, 'edit.html'), editData, 'utf8');
 
                                                                 // find controller using name
-                                        var socketTempFile = dir + '/app/sockets/' + cliManager.lowercaseFirstLetter(name) + "Socket.js";
-                                        var socketPathName = __dirname + "/templates/socket.js";
+                                        var socketTempFile = path.join(dir, 'app', 'sockets', cliManager.lowercaseFirstLetter(name) + 'Socket.js');
+                                        var socketPathName = path.join(__dirname, 'templates', 'socket.js');
 
                                         // read socket template file
                                         fs.readFile(socketPathName, 'utf8', function (err,data) {
@@ -254,7 +256,7 @@ program
   .action(function(cmd){
       var dir = process.cwd();
       console.log("starting server");
-      require(dir + '/server.js');
+      require(path.join(dir, 'server.js'));
     //return "node c:\node\server.js"
   });
 
@@ -320,15 +322,15 @@ program
   .action(function(name){
     if(name !== null){
       var dir = process.cwd();
-      var pathName = dir + "/" + name;
-      fs.mkdir(pathName + "/db",{ recursive: true });
-      fs.mkdir(pathName + "/components",{ recursive: true });
-      fs.mkdir(pathName + "/sockets",{ recursive: true });
+      var pathName = path.join(dir, name);
+      fs.mkdir(path.join(pathName, 'db'),{ recursive: true });
+      fs.mkdir(path.join(pathName, 'components'),{ recursive: true });
+      fs.mkdir(path.join(pathName, 'sockets'),{ recursive: true });
       fs.ensureDir(pathName, function(err){
              if (err) return console.log('An error occured while creating folder.');
              else{
                   // copy source folder to destination
-                  fs.copy(__dirname + "/master", pathName, function (err) {
+                  fs.copy(path.join(__dirname, 'master'), pathName, function (err) {
                       if (err) return console.log('An error occured while copying the folder.');
                       console.log("Created new Master application named " + name);
                   });

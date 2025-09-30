@@ -12,7 +12,7 @@ class homeSocket{
 		// this.beforeAction(["create","index" ,"show", "edit", "new"], function(){ });
     }
 
-    index(obj){
+    async index(obj){
         
     }
 }
