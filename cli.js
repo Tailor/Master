@@ -245,8 +245,11 @@ const [,, ...args] = process.argv
 
 //console.log(`hello ${args}`);
 
+// Read version from package.json
+const packageJson = require('./package.json');
+
 program
-  .version('1.0.9', '-v, --version', '1.0.9')
+  .version(packageJson.version, '-v, --version', packageJson.version)
   .description('Master is a node web-application framework that includes everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern.');
 
   program
