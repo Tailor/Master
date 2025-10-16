@@ -15,7 +15,6 @@ master.sessions.init();
 master.cors.init(cors);
 master.startMVC("config");
 
-
 // register these apps to have access to them in the controller.
 // example: master.register("mainContext", { anyobject : "name"});
 

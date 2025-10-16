@@ -1,8 +1,25 @@
 {
     "origin": false,
-    "methods": ["GET","HEAD","POST","DELETE","PUT","PATCH"],
-    "allowedHeaders": true,
-    "exposeHeaders": false,
-    "credentials": false,
-    "maxAge": 90
+    "methods": [
+        "GET",
+        "HEAD",
+        "POST",
+        "DELETE",
+        "PUT",
+        "PATCH",
+        "OPTIONS"
+    ],
+    "allowedHeaders": [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Accept",
+        "Origin",
+        "Cookie"
+    ],
+    "exposeHeaders": [
+        "Set-Cookie"
+    ],
+    "credentials": true,
+    "maxAge": 3600
 }
