@@ -258,13 +258,8 @@ program
   .description('Start Master Node server')
   .action(function(cmd){
       var dir = process.cwd();
-      // Check if we're in a master project by looking for server.js in a master subdirectory
-      var serverPath = path.join(dir, 'master', 'server.js');
-      if (!fs.existsSync(serverPath)) {
-        serverPath = path.join(dir, 'server.js');
-      }
       console.log("starting server");
-      require(serverPath);
+      require(path.join(dir, 'server.js'));
   });
 
   program
