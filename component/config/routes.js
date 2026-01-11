@@ -1,8 +1,28 @@
+var master = require('mastercontroller');
+var router = master.router.start();
 
-var master = require('mastercontroller')
-var router = master.router.start(); // should get location from calling function
+// ===========================
+// COMPONENT ROUTES
+// ===========================
 
-router.route("/REPLACEWITHFOLDERNAME", "home#index", "get");
-// Only route users from your component
-//an example of using a slug
-//router.route("/controller/action/:slug", "/controller/action", "get");
+// Component routes are scoped to the component namespace
+// Replace COMPONENTNAME with your component's name
+
+router.route("/COMPONENTNAME", "home#index", "get");
+
+// ===========================
+// EXAMPLE ROUTES
+// ===========================
+
+// Parameter casing is preserved!
+// router.route("/COMPONENTNAME/:itemId", "items#show", "get");
+
+// Multiple parameters
+// router.route("/COMPONENTNAME/:categoryId/items/:itemId", "items#show", "get");
+
+// ===========================
+// RESTFUL RESOURCES
+// ===========================
+
+// Generate 7 RESTful routes
+// router.resources("items");

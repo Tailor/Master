@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unprocessable Entity (422)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2em;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            color: white;
+            padding: 3em 2em;
+            text-align: center;
+        }
+        .status-code { font-size: 3em; font-weight: 900; margin-bottom: 0.3em; }
+        .title { font-size: 2em; font-weight: 600; }
+        .content { padding: 2em; text-align: center; }
+        .message { font-size: 1.1em; color: #555; margin: 1em 0; }
+        .btn {
+            display: inline-block;
+            padding: 1em 2em;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 1em;
+        }
+        .footer { background: #f8f9fa; padding: 1.5em; text-align: center; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="status-code">422</div>
+            <h1 class="title">Unprocessable Entity</h1>
+        </div>
+        <div class="content">
+            <p class="message">The request was well-formed but contains invalid data.</p>
+            <button class="btn" onclick="window.history.back()">← Go Back</button>
+        </div>
+        <div class="footer">MasterController Framework</div>
+    </div>
+</body>
+</html>

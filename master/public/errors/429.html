@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} ({{statusCode}})</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2em;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #2d3436;
+            padding: 3em 2em;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 4em;
+            margin-bottom: 0.3em;
+        }
+
+        .status-code {
+            font-size: 3em;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.3em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 0.3em;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 2em;
+        }
+
+        .message {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 2em;
+            text-align: center;
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 2em 0;
+        }
+
+        .info-box h3 {
+            color: #856404;
+            margin-bottom: 0.5em;
+            font-size: 1.1em;
+        }
+
+        .info-box p {
+            color: #856404;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .countdown {
+            text-align: center;
+            margin: 2em 0;
+        }
+
+        .countdown-timer {
+            font-size: 3em;
+            font-weight: 900;
+            color: #fdcb6e;
+            margin: 0.5em 0;
+        }
+
+        .countdown-label {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            margin-top: 2em;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1em 1.5em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #2d3436;
+            box-shadow: 0 4px 12px rgba(253, 203, 110, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(253, 203, 110, 0.5);
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 1.5em 2em;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">⏳</div>
+            <div class="status-code">{{statusCode}}</div>
+            <h1 class="title">{{title}}</h1>
+            <p class="subtitle">Slow down, speed racer!</p>
+        </div>
+
+        <div class="content">
+            <p class="message">{{message}}</p>
+
+            <div class="info-box">
+                <h3>Why did this happen?</h3>
+                <p>You've made too many requests in a short period of time. This is a protective measure to ensure the service remains available for everyone.</p>
+            </div>
+
+            <div class="countdown">
+                <div class="countdown-label">You can try again in:</div>
+                <div class="countdown-timer" id="countdown">60</div>
+                <div class="countdown-label">seconds</div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            MasterController Framework • {{environment}} environment
+        </div>
+    </div>
+
+    <script>
+        // Simple countdown timer
+        let seconds = 60;
+        const countdownEl = document.getElementById('countdown');
+
+        const interval = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = seconds;
+
+            if (seconds <= 0) {
+                clearInterval(interval);
+                countdownEl.textContent = 'Now!';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

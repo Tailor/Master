@@ -1,0 +1,53 @@
+/**
+ * API Authentication Middleware (EXAMPLE)
+ *
+ * Demonstrates the register() pattern for complex middleware.
+ * Uses master.pipeline.map() to apply authentication only to /api/* routes.
+ *
+ * To enable: Rename this file to 02-api-auth.js
+ */
+
+module.exports = {
+    register: (master) => {
+        // Apply authentication only to API routes
+        master.pipeline.map('/api/*', (api) => {
+            api.use(async (ctx, next) => {
+                const token = ctx.request.headers['authorization'];
+
+                if (!token) {
+                    ctx.response.statusCode = 401;
+                    ctx.response.setHeader('Content-Type', 'application/json');
+                    ctx.response.end(JSON.stringify({
+                        error: 'Unauthorized',
+                        message: 'Authorization token required'
+                    }));
+                    return; // Don't call next() - terminate here
+                }
+
+                // Validate token (replace with your auth logic)
+                try {
+                    // Example: const user = await validateToken(token);
+                    // ctx.state.user = user; // Store user in context
+                    console.log('API authentication successful');
+                    await next(); // Continue to next middleware
+                } catch (error) {
+                    ctx.response.statusCode = 403;
+                    ctx.response.setHeader('Content-Type', 'application/json');
+                    ctx.response.end(JSON.stringify({
+                        error: 'Forbidden',
+                        message: 'Invalid or expired token'
+                    }));
+                }
+            });
+
+            // Optional: Rate limiting for API
+            // api.use(rateLimitMiddleware);
+
+            // Optional: Force JSON response for API
+            api.use(async (ctx, next) => {
+                ctx.response.setHeader('Content-Type', 'application/json');
+                await next();
+            });
+        });
+    }
+};

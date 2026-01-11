@@ -1,0 +1,38 @@
+/**
+ * Admin Authentication Middleware (EXAMPLE)
+ *
+ * Protects /admin/* routes by checking if user is authenticated and has admin role.
+ *
+ * To enable: Rename this file to 03-admin-auth.js
+ */
+
+module.exports = {
+    register: (master) => {
+        master.pipeline.map('/admin/*', (admin) => {
+            admin.use(async (ctx, next) => {
+                // Check if user is authenticated
+                const session = master.sessions.get('user', ctx.request);
+
+                if (!session) {
+                    // Not logged in - redirect to login
+                    ctx.response.statusCode = 302;
+                    ctx.response.setHeader('Location', '/login');
+                    ctx.response.end();
+                    return;
+                }
+
+                // Check if user has admin role
+                if (!session.isAdmin) {
+                    // Logged in but not admin - show forbidden
+                    ctx.response.statusCode = 403;
+                    ctx.response.end('Forbidden: Admin access required');
+                    return;
+                }
+
+                // User is authenticated admin - continue
+                ctx.state.user = session; // Store user in context
+                await next();
+            });
+        });
+    }
+};

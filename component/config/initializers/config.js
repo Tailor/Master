@@ -1,24 +1,40 @@
 var master = require('mastercontroller');
-var mimes = require('./mime.json');
-var request = require('./request.json');
-var cors = require('./cors.json');
 
-// initlaizing the tools we need for Master to run properly
-master.serverSettings(master.env.server);
-master.request.init(request);
-master.error.init(master.env.error);
-master.router.addMimeList(mimes);
+// ===========================
+// COMPONENT CONFIGURATION
+// ===========================
 
-// Initialize Socket.IO via MasterSocket (auto-loads CORS from config/initializers/cors.json)
-master.socket.init();
-master.sessions.init();
-master.cors.init(cors);
-master.startMVC("config");
+// Components are self-contained modules with their own:
+// - Routes (config/routes.js)
+// - Controllers (app/controllers/)
+// - Views (app/views/)
+// - Models (app/models/)
 
-// register these apps to have access to them in the controller.
-// example: master.register("mainContext", { anyobject : "name"});
+// Components can register their own middleware, services, and configuration.
 
-// require as many components you need
-// example: master.component("components", "auth");
+// ===========================
+// MIDDLEWARE (Optional)
+// ===========================
 
+// Components can register custom middleware
+// Example:
+// master.pipeline.use(async (ctx, next) => {
+//     console.log('[Component] Processing request');
+//     await next();
+// });
 
+// ===========================
+// DEPENDENCY INJECTION (Optional)
+// ===========================
+
+// Register component-specific services
+// Example: master.addSingleton('componentService', ComponentService);
+
+// ===========================
+// CONFIGURATION (Optional)
+// ===========================
+
+// Component-specific configuration
+// Example:
+// const config = require('./component-config.json');
+// master.componentConfig = config;

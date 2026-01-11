@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} ({{statusCode}})</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2em;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+            color: white;
+            padding: 3em 2em;
+            text-align: center;
+        }
+
+        .status-code {
+            font-size: 6em;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.2em;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 0.3em;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2em;
+        }
+
+        .message {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 2em;
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 2em 0;
+        }
+
+        .info-box h3 {
+            color: #856404;
+            margin-bottom: 0.5em;
+            font-size: 1.2em;
+        }
+
+        .info-box p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .suggestions {
+            background: #f8f9fa;
+            border-left: 4px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 1.5em;
+            margin: 2em 0;
+        }
+
+        .suggestions h3 {
+            color: #c92a2a;
+            margin-bottom: 1em;
+            font-size: 1.2em;
+        }
+
+        .suggestions ul {
+            list-style: none;
+        }
+
+        .suggestions li {
+            padding: 0.5em 0;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .suggestions li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #c92a2a;
+            font-weight: bold;
+        }
+
+        .code-badge {
+            display: inline-block;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.3em 0.8em;
+            font-family: "Courier New", monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            margin-top: 1em;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1em;
+            margin-top: 2em;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8em 1.5em;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #c92a2a;
+            border: 2px solid #c92a2a;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 1.5em 2em;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .stack-trace {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5em;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 2em;
+            font-family: "Courier New", monospace;
+            font-size: 0.85em;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .stack-trace h4 {
+            color: #ff6b6b;
+            margin-bottom: 1em;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .status-code {
+                font-size: 4em;
+            }
+
+            .title {
+                font-size: 1.5em;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="status-code">{{statusCode}}</div>
+            <h1 class="title">{{title}}</h1>
+            <p class="subtitle">Something went wrong on our end</p>
+        </div>
+
+        <div class="content">
+            <p class="message">{{message}}</p>
+
+            <div class="info-box">
+                <h3>What happened?</h3>
+                <p>We've encountered an unexpected error. Our team has been notified and is working to fix the issue. Please try again in a few moments.</p>
+            </div>
+
+            <div class="suggestions">
+                <h3>What you can do:</h3>
+                <ul>
+                    <li>Refresh the page and try again</li>
+                    <li>Go back to the previous page</li>
+                    <li>Visit the homepage</li>
+                    <li>Contact support if the problem persists</li>
+                </ul>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="location.reload()">↻ Refresh Page</button>
+                <button class="btn btn-secondary" onclick="window.history.back()">← Go Back</button>
+            </div>
+
+            <div class="code-badge">Error Code: {{code}}</div>
+
+            {{#if showStackTrace}}
+            <div class="stack-trace">
+                <h4>Stack Trace (Development Mode Only):</h4>
+                <pre>{{stack}}</pre>
+            </div>
+            {{/if}}
+        </div>
+
+        <div class="footer">
+            MasterController Framework • {{environment}} environment
+        </div>
+    </div>
+</body>
+</html>
