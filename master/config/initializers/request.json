@@ -1,8 +1,0 @@
-{
-    "disableFormidableMultipartFormData": false,
-    "formidable": {
-        "multiples": true,
-        "keepExtensions": false,
-        "maxFileSize": "05 * 1024 * 1024"
-    }
-}

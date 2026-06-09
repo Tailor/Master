@@ -1,0 +1,19 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "master dev",
+    "build": "master build",
+    "start": "master start",
+    "db": "master db"
+  },
+  "devDependencies": {
+    "master": "^2.0.0"
+  }
+}
