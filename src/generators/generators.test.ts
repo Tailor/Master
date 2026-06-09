@@ -39,6 +39,22 @@ describe('parseFields / buildModel', () => {
     ]);
   });
 
+  it('maps the date/numeric/json aliases to native builder methods (masterrecord >= 1.3.0)', () => {
+    expect(parseFields(['at:datetime', 'on:date', 'ts:timestamp', 'price:float', 'qty:decimal'])).toEqual([
+      { name: 'at', builder: 'datetime' },
+      { name: 'on', builder: 'date' },
+      { name: 'ts', builder: 'timestamp' },
+      { name: 'price', builder: 'float' },
+      { name: 'qty', builder: 'decimal' },
+    ]);
+    expect(parseFields(['meta:json', 'ref:uuid', 'big:bigint', 'raw:blob'])).toEqual([
+      { name: 'meta', builder: 'json' },
+      { name: 'ref', builder: 'uuid' },
+      { name: 'big', builder: 'bigint' },
+      { name: 'raw', builder: 'binary' },
+    ]);
+  });
+
   it('emits a fluent-builder entity (methods, not object literals)', () => {
     const r = buildModel('post', ['title:string', 'body:text']);
     const file = fileAt(r.files, 'Post.js')!;

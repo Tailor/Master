@@ -118,8 +118,16 @@ Models use MasterRecord's fluent builder. `master g model`/`scaffold` accept `na
 | `string`, `str` | string |
 | `text` | text |
 | `int`, `integer`, `number` | integer |
+| `bigint` | bigint |
+| `float` | float |
+| `decimal` | decimal |
 | `bool`, `boolean` | boolean |
+| `date` | date |
+| `datetime`, `timestamp` | datetime / timestamp |
 | `time` | time |
+| `json` | json |
+| `uuid` | uuid |
+| `binary`, `blob` | binary |
 
 ```js
 // backend/app/models/Post.js

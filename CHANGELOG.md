@@ -3,6 +3,16 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.0.1]
+
+### Changed
+
+- The `model`/`scaffold` generators now emit native column types using MasterRecord's
+  builder methods (`db.datetime()`, `db.float()`, `db.decimal()`, `db.bigint()`,
+  `db.json()`, `db.uuid()`, `db.binary()`, `db.date()`/`db.timestamp()`) instead of
+  falling back to `string`/`text`. Requires `masterrecord >= 1.3.0`.
+- Scaffolded backends now pin `mastercontroller@^2.0.10` and `masterrecord@^1.3.0`.
+
 ## [2.0.0]
 
 A complete rebuild. Master is now a modern, Next.js-style CLI that scaffolds and runs

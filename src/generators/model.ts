@@ -11,7 +11,11 @@
 import { modelClassName } from '../lib/naming.js';
 import type { GeneratorResult } from './types.js';
 
-/** Map user-facing type aliases to MasterRecord builder methods. */
+/**
+ * Map user-facing type aliases to MasterRecord builder methods. Every target is a
+ * real builder method (masterrecord >= 1.3.0), so the generated entity uses the
+ * native column type rather than falling back to string.
+ */
 const TYPE_TO_BUILDER: Record<string, string> = {
   string: 'string',
   str: 'string',
@@ -21,16 +25,19 @@ const TYPE_TO_BUILDER: Record<string, string> = {
   int: 'integer',
   integer: 'integer',
   number: 'integer',
+  bigint: 'bigint',
   bool: 'boolean',
   boolean: 'boolean',
+  float: 'float',
+  decimal: 'decimal',
   time: 'time',
-  // No native datetime/float column — store as text/string.
-  date: 'string',
-  datetime: 'string',
-  timestamp: 'string',
-  float: 'string',
-  decimal: 'string',
-  json: 'text',
+  date: 'date',
+  datetime: 'datetime',
+  timestamp: 'timestamp',
+  json: 'json',
+  uuid: 'uuid',
+  binary: 'binary',
+  blob: 'binary',
 };
 
 export interface FieldSpec {
@@ -66,7 +73,8 @@ export function buildModel(name: string, fieldSpecs: string[] = []): GeneratorRe
 
   const contents = `// ${className} — MasterRecord entity (ESM).
 // Each field is a method that receives the schema builder (db).
-// Types: string, text, integer, boolean, time. Modifiers: .primary(), .auto(),
+// Types: string, text, integer, bigint, float, decimal, boolean, time, date,
+// datetime, timestamp, json, uuid, binary. Modifiers: .primary(), .auto(),
 // .unique(), .nullable(), .default(v). Docs: https://github.com/Tailor/MasterRecord
 export default class ${className} {
   id(db) { db.integer().primary().auto(); }
