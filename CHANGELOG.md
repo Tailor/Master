@@ -3,6 +3,16 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.0.2]
+
+### Added
+
+- **Rails-style welcome page.** New apps now open to a proper welcome screen
+  (like the classic Rails landing page): heroic key art, live frontend/backend
+  status checks, "claim the power" next-step cards, and links to masterjs.org
+  docs. Lives at `frontend/app/page.tsx`; replace it when you build your home page.
+- The welcome art ships with the CLI (`frontend/public/master-welcome.png`).
+
 ## [2.0.1]
 
 ### Changed
