@@ -3,6 +3,16 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.0.3]
+
+### Changed
+
+- Scaffolded backends pin `masterrecord@^1.3.1`, which fixes two production
+  bugs: Windows-generated migration snapshots crashing Linux deploys
+  (`ERR_INVALID_MODULE_SPECIFIER` before any migration ran), and `bulkInsert`
+  emitting malformed multi-row INSERTs for heterogeneous batches on
+  MySQL/Postgres (silent per-row fallback; possible wrong-column writes).
+
 ## [2.0.2]
 
 ### Added
