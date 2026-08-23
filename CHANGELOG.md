@@ -3,6 +3,14 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.1.1]
+
+### Changed
+
+- Scaffolded backends pin **masterrecord ^1.23.0** — entity property reads are ~16x faster
+  (one shared prototype per entity type; O(n²) loops over result sets went from minutes to
+  seconds) and boolean columns read back as `true`/`false`. No template changes otherwise.
+
 ## [2.1.0]
 
 ASP.NET Core-level scaffold + `dotnet`-style tooling. Validated end to end: a freshly

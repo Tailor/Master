@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "mastercontroller": "^2.11.0",
-    "masterrecord": "^1.22.0",
+    "masterrecord": "^1.23.0",
     "socket.io": "^4.8.1"
   }
 }
