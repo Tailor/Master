@@ -29,12 +29,13 @@ const CONTEXT_NAME = 'AppContext';
 export function envConfig(
   db: DbChoice,
   appName: string,
-  env: 'development' | 'production',
+  env: 'development' | 'test' | 'production',
 ): string {
   const dbName = `${kebabCase(appName).replace(/-/g, '_')}_${env}`;
   let settings: Record<string, unknown>;
   if (db === 'sqlite') {
-    settings = { type: 'better-sqlite3', connection: 'db/' };
+    // A separate SQLite file for the test environment (`master test` sets NODE_ENV=test).
+    settings = { type: 'better-sqlite3', connection: env === 'test' ? 'db/test/' : 'db/' };
   } else if (db === 'mysql') {
     settings = {
       type: 'mysql',
@@ -112,6 +113,7 @@ export async function runNew(name: string, options: NewOptions): Promise<void> {
     join(envDir, 'env.production.json'),
     envConfig(options.db, appName, 'production'),
   );
+  await fse.writeFile(join(envDir, 'env.test.json'), envConfig(options.db, appName, 'test'));
   log.success(`Configured database: ${options.db}`);
 
   // 4. Optionally drop the frontend.

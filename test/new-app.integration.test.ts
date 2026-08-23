@@ -53,16 +53,29 @@ describe('master new (integration)', () => {
   it('wires the backend to the current library versions', async () => {
     const pkg = await readJson(join(appDir, 'backend', 'package.json'));
     expect(pkg.type).toBe('module');
-    expect(pkg.dependencies.mastercontroller).toMatch(/^\^2\./);
-    expect(pkg.dependencies.masterrecord).toMatch(/^\^1\./);
+    expect(pkg.dependencies.mastercontroller).toMatch(/^\^2\.(1[1-9]|[2-9]\d)\./);
+    expect(pkg.dependencies.masterrecord).toMatch(/^\^1\.(2[2-9]|[3-9]\d)\./);
+    expect(pkg.scripts.test).toBe('node --test test/*.test.js');
   });
 
-  it('generates an ESM server using the v2 boot sequence', async () => {
+  it('generates an ESM server using the v2 boot sequence with enterprise defaults', async () => {
     const server = await readFile(join(appDir, 'backend', 'server.js'), 'utf8');
     expect(server).toContain("import master from 'mastercontroller'");
     expect(server).toContain("master.setupServer('http')");
+    expect(server).toContain("master.addScoped('db', AppContext)"); // request-scoped DbContext, never a singleton
+    expect(server).toContain('master.useHealthChecks(');
+    expect(server).toContain('master.useOpenApi(');
+    expect(server).toContain('master.useResponseCompression()');
+    expect(server).toContain('master.useGracefulShutdown()');
     expect(server).toContain("await master.startMVC('app')");
     expect(server).toContain('await master.start(server)');
+  });
+
+  it('ships layered configuration, a test environment and an in-process test', () => {
+    expect(exists(join(appDir, 'backend', 'config', 'appsettings.json'))).toBe(true);
+    expect(exists(join(appDir, 'backend', 'config', 'appsettings.production.json'))).toBe(true);
+    expect(exists(join(appDir, 'backend', 'config', 'environments', 'env.test.json'))).toBe(true);
+    expect(exists(join(appDir, 'backend', 'test', 'health.test.js'))).toBe(true);
   });
 
   it('writes a sqlite env keyed by the context name', async () => {

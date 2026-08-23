@@ -11,6 +11,8 @@ import { runNew, type DbChoice } from './commands/new.js';
 import { runGenerate, GENERATOR_TYPES } from './commands/generate.js';
 import { runDev, runBuild, runStart } from './commands/run.js';
 import { runDb, DB_ACTIONS } from './commands/db.js';
+import { runSecrets, SECRETS_ACTIONS } from './commands/secrets.js';
+import { runTest } from './commands/test.js';
 import { runRoutes } from './commands/routes.js';
 import { runInfo, runPower } from './commands/info.js';
 import { banner } from './lib/log.js';
@@ -79,9 +81,34 @@ program
   .argument('<action>', `database action: ${DB_ACTIONS.join(', ')}`)
   .argument('[name]', 'migration name (for `db new`)')
   .option('--env <env>', 'environment (development | production | ...)')
-  .description('Run database migrations via MasterRecord')
+  .option('-f, --force', 'db remove: revert the migration if it was applied, then remove it', false)
+  .option('-o, --output <file>', 'db script: write the SQL to a file')
+  .description('Run database migrations via MasterRecord (migrate, rollback, new, remove, status, script, …)')
   .action(async (action: string, name: string | undefined, opts) => {
-    await runDb(action, name, { env: opts.env });
+    await runDb(action, name, { env: opts.env, force: !!opts.force, output: opts.output });
+  });
+
+// master secrets <action> [key] [value]
+program
+  .command('secrets')
+  .argument('<action>', `secrets action: ${SECRETS_ACTIONS.join(', ')}`)
+  .argument('[key]', 'configuration key, e.g. Auth:JwtSecret')
+  .argument('[value]', 'value (for `secrets set`)')
+  .option('--reveal', 'show values in `secrets list`', false)
+  .option('--id <id>', 'secrets id (defaults to the backend package name)')
+  .description('Manage development secrets stored outside the repo (the dotnet user-secrets equivalent)')
+  .action(async (action: string, key: string | undefined, value: string | undefined, opts) => {
+    await runSecrets(action, key, value, { reveal: !!opts.reveal, id: opts.id });
+  });
+
+// master test
+program
+  .command('test')
+  .option('--frontend', 'also run the frontend test script', false)
+  .option('--env <env>', 'NODE_ENV for the run (default: test)')
+  .description('Run the backend (and optionally frontend) test suites')
+  .action(async (opts) => {
+    await runTest({ frontend: !!opts.frontend, env: opts.env });
   });
 
 // master routes

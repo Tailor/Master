@@ -11,14 +11,14 @@ const fileAt = (files: { path: string; contents: string }[], suffix: string) =>
   files.find((f) => f.path.endsWith(suffix));
 
 describe('buildController', () => {
-  it('emits an API controller class with returnJson actions + routes', () => {
+  it('emits an API controller class with typed-result actions + routes', () => {
     const r = buildController('users', ['index', 'show']);
     const file = fileAt(r.files, 'usersController.js')!;
     expect(file.contents).toContain('export default class UsersController');
     expect(file.contents).toContain('async index(obj)');
     expect(file.contents).toContain('async show(obj)');
-    expect(file.contents).toContain('this.returnJson(');
-    expect(file.contents).not.toContain('this.json(');
+    expect(file.contents).toContain('this.ok(');
+    expect(file.contents).not.toContain('this.returnJson(');
     expect(r.routes).toContain(`router.route('/users', 'users#index', 'get');`);
     expect(r.routes).toContain(`router.route('/users/show', 'users#show', 'get');`);
   });
@@ -80,13 +80,18 @@ describe('buildScaffold', () => {
     expect(fileAt(r.files, 'posts/page.tsx')).toBeTruthy();
 
     const controller = fileAt(r.files, 'postsController.js')!.contents;
-    expect(controller).toContain(`import db from '../models/db.js';`);
-    expect(controller).toContain('await db.Post.toList();');
-    expect(controller).toContain('db.Post.where((m) => m.id == $$,');
-    expect(controller).toContain('this.returnError(404,');
+    expect(controller).not.toContain(`import db from '../models/db.js';`);
+    expect(controller).toContain('await this.db.Post.toList();');
+    expect(controller).toContain('this.db.Post.find(obj.params.id)');
+    expect(controller).toContain("this.notFound('Post not found')");
+    expect(controller).toContain('static schemas = {');
+    expect(controller).toContain("title: { type: 'string', required: true }");
+    expect(controller).toContain("body: { type: 'string', required: true }");
+    expect(controller).toContain('this.created(`/posts/${item.id}`');
+    expect(controller).toContain('this.noContent();');
 
     expect(r.models).toEqual(['Post']);
-    expect(r.routes).toContain(`router.route('/posts/:id', 'posts#destroy', 'delete');`);
+    expect(r.routes).toContain(`router.route('/posts/:id(int)', 'posts#destroy', 'delete');`);
   });
 
   it('pluralizes the resource and singularizes the model', () => {

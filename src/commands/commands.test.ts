@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { parseRoutes } from './routes.js';
 import { envConfig } from './new.js';
+import { setSecret, getSecret, removeSecret, flattenSecrets, secretsFilePath } from './secrets.js';
+import { DB_ACTIONS } from './db.js';
 
 describe('parseRoutes', () => {
   it('parses single routes', () => {
@@ -43,5 +45,25 @@ describe('envConfig', () => {
     expect(my.AppContext.type).toBe('mysql');
     expect(my.AppContext.port).toBe(3306);
     expect(my.AppContext.database).toBe('shop_development');
+  });
+});
+
+describe('secrets helpers', () => {
+  it('set/get/remove nested Section:Key paths case-insensitively and flatten', () => {
+    const data: Record<string, unknown> = {};
+    setSecret(data, 'Auth:JwtSecret', 'abc');
+    setSecret(data, 'auth:Issuer', 'me');
+    expect(data).toEqual({ Auth: { JwtSecret: 'abc', Issuer: 'me' } });
+    expect(getSecret(data, 'AUTH:jwtsecret')).toBe('abc');
+    expect(flattenSecrets(data)).toEqual([['Auth:JwtSecret', 'abc'], ['Auth:Issuer', 'me']]);
+    expect(removeSecret(data, 'Auth:Issuer')).toBe(true);
+    expect(removeSecret(data, 'Nope:x')).toBe(false);
+    expect(data).toEqual({ Auth: { JwtSecret: 'abc' } });
+    process.env.MASTER_USER_SECRETS_PATH = '/tmp/ms';
+    expect(secretsFilePath('my app/x')).toBe('/tmp/ms/my_app_x/secrets.json');
+    delete process.env.MASTER_USER_SECRETS_PATH;
+  });
+  it('db actions include the EF migrations commands', () => {
+    expect(DB_ACTIONS).toEqual(expect.arrayContaining(['migrate', 'rollback', 'new', 'remove', 'status', 'script', 'enable', 'list', 'ensure']));
   });
 });

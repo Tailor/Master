@@ -52,14 +52,17 @@ master new my-app --skip-install    # skip npm install
 my-app/
 ├── master.config.js          # ports + frontend toggle
 ├── backend/                   # MasterController API + MasterRecord ORM (ESM)
-│   ├── server.js              # boots the framework
+│   ├── server.js              # boots the framework (scoped DbContext, config, health, OpenAPI, auth)
 │   ├── app/
-│   │   ├── routes.js          # URL → controller#action
-│   │   ├── controllers/       # API controllers (this.returnJson(...))
-│   │   ├── models/            # MasterRecord entities, AppContext, db handle
+│   │   ├── routes.js          # URL → controller#action (+ authorize / typed params / versions)
+│   │   ├── controllers/       # API controllers (this.db, this.model, this.ok/created/notFound…)
+│   │   ├── models/            # MasterRecord entities + AppContext (one per request)
 │   │   └── sockets/           # WebSocket controllers
 │   ├── middleware/            # auto-loaded request pipeline
-│   └── config/environments/   # per-env database config
+│   ├── config/
+│   │   ├── appsettings.json   # layered configuration (+ appsettings.production.json)
+│   │   └── environments/      # per-env database config (development / test / production)
+│   └── test/                  # `master test` — in-process integration tests (createTestClient)
 └── frontend/                  # Next.js App Router (TypeScript)
     └── app/                   # page.tsx, layout.tsx, lib/api.ts
 ```
@@ -76,7 +79,9 @@ The two halves run side by side. The frontend reaches the backend through the ty
 | `master build` | Build the frontend for production |
 | `master start` | Run backend + frontend in production mode |
 | `master generate <type> <name>` *(alias `g`)* | Generate code (see below) |
-| `master db <action> [name]` | Run database migrations (MasterRecord) |
+| `master db <action> [name]` | Database migrations (MasterRecord) — the `dotnet ef` equivalent |
+| `master secrets <action> [key] [value]` | Development secrets outside the repo — the `dotnet user-secrets` equivalent |
+| `master test [--frontend]` | Run the backend (and optionally frontend) test suites |
 | `master routes` | List the registered API routes |
 | `master info` | Framework + environment info |
 
@@ -100,14 +105,32 @@ for you.
 
 ```bash
 master db migrate          # apply pending migrations (update-database)
-master db new AddPosts     # create a migration from your current models
+master db new AddPosts     # create a migration from your current models (enables migrations on first use)
 master db rollback         # roll back the latest migration
-master db enable           # enable migrations (one-time)
+master db status           # applied / pending migrations (EF: migrations list)
+master db script -o up.sql # SQL for the pending migrations, nothing applied (EF: migrations script)
+master db remove [--force] # delete the latest migration file (EF: migrations remove)
 master db list             # list migration files
+master db --env production migrate
 ```
 
 `master db` is a thin, friendly wrapper around the [`masterrecord`](https://github.com/Tailor/MasterRecord)
 migration CLI, always run inside `backend/` with the right context and environment.
+
+### Configuration, secrets, tests
+
+```bash
+master secrets set Auth:JwtSecret <32+ random chars>   # ~/.master/usersecrets/<app>/secrets.json
+master secrets list                                     # values masked (--reveal to show)
+master test                                             # backend tests (node --test, NODE_ENV=test)
+```
+
+Scaffolded apps read configuration ASP.NET-style — `config/appsettings.json` <
+`appsettings.{env}.json` < user secrets < environment variables (`Section__Key`) — and
+register the database context **per request** (`master.addScoped('db', AppContext)`, used as
+`this.db` in controllers). Health endpoints (`/health/live`, `/health/ready`), OpenAPI
+(`/openapi.json` + `/docs`), response compression, graceful shutdown and opt-in JWT auth
+are wired in `server.js`.
 
 ## Field types
 

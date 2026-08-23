@@ -3,6 +3,41 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.1.0]
+
+ASP.NET Core-level scaffold + `dotnet`-style tooling. Validated end to end: a freshly
+scaffolded app (sqlite) migrates, passes `master test`, serves CRUD with validation,
+typed routes, health, OpenAPI/Swagger UI and compression, and survives 20 concurrent writes.
+
+### Added
+
+- `master db status` / `script [-o file]` / `remove [--force]` (EF `migrations list/script/remove`),
+  `--env`. `master db new|migrate|…` **enable migrations automatically** on first use.
+- `master secrets set|get|list|remove|clear|path` — development secrets in
+  `~/.master/usersecrets/<app>/secrets.json` (the `dotnet user-secrets` equivalent); the
+  scaffolded `server.js` sets `master.userSecretsId` so MasterController reads them.
+- `master test [--frontend] [--env]` — runs the backend `npm test` (node --test) with `NODE_ENV=test`.
+- Scaffold (`master new`): `config/appsettings.json` + `appsettings.production.json`,
+  `config/environments/env.test.json` (separate sqlite file), `backend/test/health.test.js`
+  (in-process `createTestClient`), `backend` `test` script.
+
+### Changed
+
+- Scaffolded backends pin **mastercontroller ^2.11** and **masterrecord ^1.22**.
+- `server.js` now registers the database context **per request** —
+  `master.addScoped('db', AppContext)` → `this.db` in controllers (ASP.NET/EF scoped DbContext).
+  The old singleton `app/models/db.js` export is gone; `db.js` exports `withDb(fn)` for jobs/scripts.
+  `NODE_ENV` defaults to `development`; layered configuration, response compression,
+  health endpoints (`/health/live|ready|report` with a database check), OpenAPI (`/openapi.json`,
+  Swagger UI at `/docs` outside production), graceful shutdown and opt-in JWT auth
+  (`Auth:JwtSecret`) are wired in.
+- `scaffold` controllers: `static schemas` generated from the fields (model binding + validation,
+  automatic `400 ValidationProblemDetails`), typed results (`ok/created/noContent/notFound`),
+  typed `:id(int)` routes, `this.db`, commented `static authorize`.
+- `controller` generator emits `this.ok(...)` instead of `this.returnJson(...)`.
+- Route parser (`master routes`) handles route options (`router.route(path, to, method, { … })`).
+- Docs: getting started (configuration/secrets/auth/test), generators, README, template README.
+
 ## [2.0.3]
 
 ### Changed

@@ -17,19 +17,24 @@ master g scaffold post title:string body:text
 Creates and wires up:
 
 - `backend/app/models/Post.js` — a MasterRecord entity, registered in `AppContext.js`
-- `backend/app/controllers/postsController.js` — a RESTful JSON controller backed by the ORM
+- `backend/app/controllers/postsController.js` — a RESTful JSON controller backed by the
+  request-scoped context (`this.db`), with `static schemas` derived from your fields (model
+  binding + validation → `this.model`, automatic `400 ValidationProblemDetails`) and typed
+  results (`this.ok / created / noContent / notFound`). Uncomment `static authorize` to
+  require a signed-in user for writes.
 - `frontend/app/posts/page.tsx` — a Next.js list page that fetches `/posts`
-- 5 routes in `backend/app/routes.js`:
+- 5 routes in `backend/app/routes.js` (typed `:id(int)` — `/posts/abc` is a 404, not a query):
 
   | Method | Path | Action |
   | --- | --- | --- |
   | GET | `/posts` | index |
-  | GET | `/posts/:id` | show |
+  | GET | `/posts/:id(int)` | show |
   | POST | `/posts` | create |
-  | PUT | `/posts/:id` | update |
-  | DELETE | `/posts/:id` | destroy |
+  | PUT | `/posts/:id(int)` | update |
+  | DELETE | `/posts/:id(int)` | destroy |
 
-Then: `master db new AddPosts && master db migrate`.
+Then: `master db new AddPosts && master db migrate`. The API is documented automatically at
+`/openapi.json` (Swagger UI at `/docs` in development).
 
 ## `controller`
 
@@ -38,7 +43,9 @@ master g controller users index show profile
 ```
 
 Creates `backend/app/controllers/usersController.js` with one action per name (default
-`index`) and a GET route for each. Actions reply with `this.returnJson(...)`.
+`index`) and a GET route for each. Actions reply with typed results (`this.ok(...)`,
+`this.created`, `this.notFound`, `this.problem`, …) and can use `this.db`, `this.user`,
+`this.logger`, `this.options`; the template shows where `static authorize` / `static schemas` go.
 
 ## `model`
 
