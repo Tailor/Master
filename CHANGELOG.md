@@ -3,6 +3,18 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.1.2]
+
+### Changed
+
+- Scaffolded backends pin **masterrecord ^1.30.0**. From 1.30.0 the migration snapshot is
+  written when a migration is **authored** (`master db new`) and never when one is
+  **applied** (`master db migrate`) — matching EF Core, where `migrations add` regenerates
+  ModelSnapshot and `database update` never touches it. That is what guarantees a fresh
+  database can replay every migration in order. Also: `count()` returns a number on
+  Postgres, and generated `alterColumn` migrations are self-contained (they no longer
+  depend on the snapshot lagging, and `down` restores the old column definition).
+
 ## [2.1.1]
 
 ### Changed
