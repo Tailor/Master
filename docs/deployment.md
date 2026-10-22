@@ -3,6 +3,18 @@
 A Master app is two deployable services: the **Next.js frontend** and the
 **MasterController backend**. You can run them on one host or split them across two.
 
+## Runtime
+
+Run Node.js **22.12 or newer** on a supported LTS line, and keep it on the latest patch:
+Node.js ships security fixes as patch releases (the 2026-10-20 releases are 22.23.4,
+24.22.1 and 26.12.1). Node 20 is end-of-life and gets none. Add `npm audit --omit=dev` to
+your release pipeline so a vulnerable dependency fails the build.
+
+npm 12 (and npm 11.19+) blocks dependency install scripts by default. Nothing in a Master
+app needs one: `better-sqlite3` loads its prebuilt binary, and Next.js ships its SWC
+binaries as packages. Record that once with `npm install-scripts deny better-sqlite3` to
+silence the notice (on a platform without a prebuilt SQLite binary, `approve` it instead).
+
 ## Build
 
 ```bash

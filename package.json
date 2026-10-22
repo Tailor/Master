@@ -1,6 +1,6 @@
 {
   "name": "master",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "The command center for the Master framework — a Next.js-style CLI that scaffolds and runs decoupled full-stack apps (Next.js frontend + MasterController API + MasterRecord ORM). By the power of Grayskull!",
   "type": "module",
   "bin": {
@@ -15,7 +15,7 @@
     "./package.json": "./package.json"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.12.0"
   },
   "files": [
     "dist/**/*.js",
@@ -80,6 +80,9 @@
     "tsup": "^8.5.1",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.0",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.12"
+  },
+  "overrides": {
+    "esbuild": "^0.28.2"
   }
 }

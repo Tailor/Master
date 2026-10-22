@@ -3,6 +3,46 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.2.0]
+
+Security maintenance, and two scaffold breaks fixed that the end-to-end check found.
+Validated end to end on Node 22.23.4 (npm 10), 24.22.1 and 26.12.1 (npm 11 and npm 12.2.1): a fresh app
+installs with **0 vulnerabilities**, `master db migrate` + `master test` pass, a generated
+scaffold migrates and serves CRUD, and `master build` builds the Next.js app.
+
+### Security
+
+- Scaffolded backends pin **mastercontroller ^2.12.0** (patched `qs`, no `url.parse()`)
+  and **masterrecord ^1.31.0** (patched SQLite via better-sqlite3 13.0.3).
+- Scaffolded frontends pin **next ^16.4.2**. Next.js ≤ 16.3.7 is affected by critical
+  advisories (among them RCE in the Image Optimization API and in `next/og`, middleware
+  bypass, SSRF in Server Actions and rewrites, cache poisoning) and bundles vulnerable
+  `postcss` and `sharp`.
+- The CLI's own dev toolchain: `vitest` ^4.1.12 (GHSA-82fw-gwwq-j7x9, GHSA-qxg6-89mg-rqv8),
+  which brings `vite` 8.3.5, `postcss` 8.5.31, patched `nanoid`, `source-map-js`, `js-yaml`
+  and `brace-expansion`. `esbuild` is overridden to ^0.28.2 (GHSA-g7r4-m6w7-qqqr) because
+  `tsup` 8 caps it at 0.27; the built `dist/` is byte-identical. `npm audit`: 0.
+
+### Changed
+
+- **Requires Node.js 22.12+** (`engines`, also declared in the generated app's root
+  `package.json`). Node 20 reached end-of-life on 2026-04-30.
+- Scaffolded backends pin `socket.io` ^4.8.4 and the generated app's root pins
+  `master` ^2.2.0.
+
+### Fixed
+
+- **`master db migrate` failed on a new app** ("No migration files found"). Since
+  masterrecord 1.30.0, applying runs migration files only (EF `database update`), and the
+  scaffold shipped a `User` model with no migration. New apps now ship an `InitialCreate`
+  migration and its snapshot, the way ASP.NET templates ship theirs, so `npm install` →
+  `master db migrate` works as documented. For an app created before 2.2.0,
+  `master db migrate` now says what to do instead of passing masterrecord's error
+  through: `master db new InitialCreate`, then `master db migrate`.
+- **Removed the frontend's `lint` script.** It ran `next lint`, which Next.js 16 removed,
+  so it could only fail. `eslint-config-next` was not added in its place: it pulls in
+  `braces`, which has an unpatched high-severity advisory (GHSA-vfj7-8cjw-p6xm).
+
 ## [2.1.2]
 
 ### Changed

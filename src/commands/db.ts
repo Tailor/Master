@@ -41,6 +41,13 @@ export function hasSnapshot(dir: string): boolean {
   return entries.some((p) => !p.includes('node_modules') && /_contextsnapshot\.json$/i.test(p));
 }
 
+/** True when a `<timestamp>_<Name>_migration.js` exists anywhere under the backend (excluding node_modules). */
+export function hasMigrations(dir: string): boolean {
+  if (!existsSync(dir)) return false;
+  const entries = readdirSync(dir, { recursive: true, encoding: 'utf8' }) as string[];
+  return entries.some((p) => !p.includes('node_modules') && /_migration\.js$/i.test(p));
+}
+
 export async function runDb(
   action: string,
   name: string | undefined,
@@ -77,6 +84,17 @@ export async function runDb(
       process.exitCode = enableCode;
       return;
     }
+  }
+
+  // masterrecord >= 1.30 applies migration files only (EF `database update`), so a
+  // model with no migration has nothing to apply. New apps ship InitialCreate; apps
+  // scaffolded before master 2.2.0 have to author it once.
+  if (action === 'migrate' && !hasMigrations(backendDir(root))) {
+    log.error('No migrations yet — create the first one from your models, then migrate:');
+    log.info('    master db new InitialCreate');
+    log.info('    master db migrate');
+    process.exitCode = 1;
+    return;
   }
 
   const extra: string[] = [];

@@ -4,7 +4,7 @@ This guide takes you from zero to a running full-stack Master app.
 
 ## Prerequisites
 
-- **Node.js ≥ 20**
+- **Node.js ≥ 22.12** (a supported LTS on its latest patch — Node 20 is end-of-life)
 - npm (bundled with Node)
 - For MySQL/PostgreSQL apps: a running database server. SQLite (the default) needs nothing.
 
@@ -37,7 +37,8 @@ master new my-app --db sqlite      # default
 master db migrate
 ```
 
-For SQLite this creates `backend/db/appcontext.sqlite` (and `db/test/` for `master test`).
+New apps ship an `InitialCreate` migration for the example `User` model (like ASP.NET's
+project templates ship theirs), so this works straight away. For SQLite this creates `backend/db/appcontext.sqlite` (and `db/test/` for `master test`).
 For MySQL/Postgres, edit the credentials in `backend/config/environments/env.development.json`
 first (the config is keyed by the context name, `AppContext`):
 
@@ -54,9 +55,9 @@ first (the config is keyed by the context name, `AppContext`):
 }
 ```
 
-`master db new <Name>` creates a migration from your models (migrations are enabled
-automatically on first use), `master db status` shows applied/pending, `master db script`
-prints the SQL without applying it, `master db rollback` reverts the latest one.
+`master db new <Name>` creates a migration from your models, `master db status` shows
+applied/pending, `master db script` prints the SQL without applying it, `master db rollback`
+reverts the latest one.
 
 ## 4. Run it
 
