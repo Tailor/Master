@@ -14,7 +14,7 @@
     "db": "master db"
   },
   "devDependencies": {
-    "master": "^2.2.0"
+    "master": "^2.2.1"
   },
   "engines": {
     "node": ">=22.12.0"
