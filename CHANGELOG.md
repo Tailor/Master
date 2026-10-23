@@ -3,6 +3,18 @@
 All notable changes to the `master` CLI are documented here. This project adheres to
 [Semantic Versioning](https://semver.org).
 
+## [2.2.1]
+
+### Fixed
+
+- Scaffolded backends pin **masterrecord ^1.31.1**. masterrecord 1.31.0 required
+  `better-sqlite3@^13.0.3`, so an app that also pinned better-sqlite3 12 got a second,
+  nested 13.x that npm 10 compiles with `node-gyp` — and builds on images without Python
+  failed. 1.31.1 accepts `>=12.6.2 <14` again and shares the app's copy.
+- `docs/deployment.md`: the install-script note said npm 11.19+ blocks dependency scripts;
+  only npm 12 does. It now says what each npm needs for `better-sqlite3` (deny on 13.x
+  under npm 12; python3/make/g++ or a pinned 12.x under npm 10/11).
+
 ## [2.2.0]
 
 Security maintenance, and two scaffold breaks fixed that the end-to-end check found.

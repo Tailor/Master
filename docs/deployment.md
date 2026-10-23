@@ -10,10 +10,19 @@ Node.js ships security fixes as patch releases (the 2026-10-20 releases are 22.2
 24.22.1 and 26.12.1). Node 20 is end-of-life and gets none. Add `npm audit --omit=dev` to
 your release pipeline so a vulnerable dependency fails the build.
 
-npm 12 (and npm 11.19+) blocks dependency install scripts by default. Nothing in a Master
-app needs one: `better-sqlite3` loads its prebuilt binary, and Next.js ships its SWC
-binaries as packages. Record that once with `npm install-scripts deny better-sqlite3` to
-silence the notice (on a platform without a prebuilt SQLite binary, `approve` it instead).
+The SQLite driver, `better-sqlite3`, is the one dependency with a native build, and how it
+installs depends on your npm:
+
+- **npm 12** blocks dependency install scripts by default. A new app gets `better-sqlite3`
+  13, whose prebuilt binary is bundled, so run `npm install-scripts deny better-sqlite3`
+  once and commit the `allowScripts` entry it writes.
+- **npm 10/11** (bundled with Node 22/24) run the script, and for 13.x that is `node-gyp
+  rebuild`: the build image needs `python3`, `make` and `g++`. On a slim Docker or Nixpacks
+  image without them, pin `better-sqlite3@^12.6.2` in `backend/package.json` — masterrecord
+  (1.31.1+) shares that copy, and 12.x downloads a prebuilt binary instead of compiling.
+  Under npm 12, approve it: `npm install-scripts approve better-sqlite3`.
+
+Next.js ships its SWC binaries as packages, so nothing else needs a script.
 
 ## Build
 
