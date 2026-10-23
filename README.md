@@ -26,14 +26,15 @@ Every app is a clean, decoupled monorepo:
 npm install -g master
 ```
 
-Requires **Node.js ≥ 20**.
+Requires **Node.js ≥ 22.12** — use a supported LTS line on its latest security patch
+(Node 20 is end-of-life).
 
 ## Quick start
 
 ```bash
 master new my-app        # scaffold a full-stack monorepo
 cd my-app
-master db migrate        # create the database schema (SQLite by default)
+master db migrate        # apply the shipped InitialCreate migration (SQLite by default)
 master dev               # run the API (:3001) + Next.js (:3000) together
 ```
 

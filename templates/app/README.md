@@ -9,9 +9,11 @@ The two run side by side; the frontend talks to the backend over HTTP.
 
 ## Getting started
 
+Requires Node.js 22.12+.
+
 ```bash
 npm install          # install backend + frontend (npm workspaces)
-master db migrate    # create the database schema
+master db migrate    # apply InitialCreate (creates the User table)
 master dev           # start the API (:3001) and the Next.js app (:3000)
 ```
 

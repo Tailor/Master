@@ -9,8 +9,8 @@
     "test": "node --test test/*.test.js"
   },
   "dependencies": {
-    "mastercontroller": "^2.11.0",
-    "masterrecord": "^1.30.0",
-    "socket.io": "^4.8.1"
+    "mastercontroller": "^2.12.0",
+    "masterrecord": "^1.31.0",
+    "socket.io": "^4.8.4"
   }
 }

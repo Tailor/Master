@@ -1,0 +1,72 @@
+{
+  "contextLocation": "../../AppContext.js",
+  "migrationFolder": ".",
+  "snapShotLocation": "appcontext_contextSnapShot.json",
+  "schema": [
+    {
+      "id": {
+        "name": "id",
+        "type": "integer",
+        "primary": true,
+        "nullable": false,
+        "unique": true,
+        "auto": true,
+        "cascadeOnDelete": true,
+        "lazyLoading": true,
+        "isNavigational": false,
+        "skipGetFunction": false,
+        "valueConversion": true
+      },
+      "name": {
+        "name": "name",
+        "type": "string",
+        "nullable": true,
+        "unique": false,
+        "auto": false,
+        "cascadeOnDelete": true,
+        "lazyLoading": true,
+        "isNavigational": false,
+        "skipGetFunction": false,
+        "valueConversion": true
+      },
+      "email": {
+        "name": "email",
+        "type": "string",
+        "nullable": true,
+        "unique": true,
+        "auto": false,
+        "cascadeOnDelete": true,
+        "lazyLoading": true,
+        "isNavigational": false,
+        "skipGetFunction": false,
+        "valueConversion": true
+      },
+      "createdAt": {
+        "name": "createdAt",
+        "type": "datetime",
+        "nullable": true,
+        "unique": false,
+        "auto": false,
+        "cascadeOnDelete": true,
+        "lazyLoading": true,
+        "isNavigational": false,
+        "skipGetFunction": false,
+        "valueConversion": true,
+        "defaultSql": "CURRENT_TIMESTAMP"
+      },
+      "__compositeIndexes": [],
+      "__name": "User"
+    }
+  ],
+  "seedData": {},
+  "seedConfig": {
+    "generateDownMigrations": false,
+    "downStrategy": "delete",
+    "deleteByPrimaryKey": true,
+    "onRollbackError": "warn",
+    "detectCircularDependencies": true,
+    "circularStrategy": "warn",
+    "defaultStrategy": "insert"
+  },
+  "latestMigration": "1792686992366_InitialCreate_migration.js"
+}

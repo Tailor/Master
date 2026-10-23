@@ -2,7 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { parseRoutes } from './routes.js';
 import { envConfig } from './new.js';
 import { setSecret, getSecret, removeSecret, flattenSecrets, secretsFilePath } from './secrets.js';
-import { DB_ACTIONS } from './db.js';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { DB_ACTIONS, hasMigrations, hasSnapshot } from './db.js';
 
 describe('parseRoutes', () => {
   it('parses single routes', () => {
@@ -65,5 +68,25 @@ describe('secrets helpers', () => {
   });
   it('db actions include the EF migrations commands', () => {
     expect(DB_ACTIONS).toEqual(expect.arrayContaining(['migrate', 'rollback', 'new', 'remove', 'status', 'script', 'enable', 'list', 'ensure']));
+  });
+});
+
+describe('db migration detection', () => {
+  it('finds migration files and snapshots under the backend, ignoring node_modules', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'master-db-'));
+    try {
+      const migrations = join(dir, 'app', 'models', 'db', 'migrations');
+      mkdirSync(migrations, { recursive: true });
+      mkdirSync(join(dir, 'node_modules', 'pkg'), { recursive: true });
+      writeFileSync(join(dir, 'node_modules', 'pkg', '1_Other_migration.js'), '');
+      expect(hasMigrations(dir)).toBe(false);
+      expect(hasSnapshot(dir)).toBe(false);
+      writeFileSync(join(migrations, 'appcontext_contextSnapShot.json'), '{}');
+      writeFileSync(join(migrations, '1792686992366_InitialCreate_migration.js'), '');
+      expect(hasMigrations(dir)).toBe(true);
+      expect(hasSnapshot(dir)).toBe(true);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
